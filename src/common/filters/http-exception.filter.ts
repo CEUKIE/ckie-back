@@ -3,13 +3,17 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
-  Logger,
+  Inject,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
-  private readonly logger = new Logger(HttpExceptionFilter.name);
+  constructor(
+    @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+  ) {}
 
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -35,7 +39,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       errorMessage = errorMessage.message;
     }
 
-    this.logger.error(
+    this.logger.warn(
       `Error to ${req.method} ${
         req.url
       }${ipMessage} ${paramMessage} ${queryMessage} ${bodyMessage} \nstatusCode : ${status} \nmessage : ${JSON.stringify(
