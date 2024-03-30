@@ -26,7 +26,7 @@ import * as winston from 'winston';
               : winston.format.combine(
                   winston.format.timestamp(),
                   winston.format.ms(),
-                  nestWinstonModuleUtilities.format.nestLike('Bubble-Chat', {
+                  nestWinstonModuleUtilities.format.nestLike('CKIE', {
                     colors: true,
                     prettyPrint: true,
                   }),
