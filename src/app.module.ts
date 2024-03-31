@@ -9,12 +9,15 @@ import {
   utilities as nestWinstonModuleUtilities,
 } from 'nest-winston';
 import * as winston from 'winston';
+import { AuthModule } from './auth/auth.module';
+import { validationSchema } from './configs/validationSchema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`./configs/env/.env.${process.env.NODE_ENV}`],
+      envFilePath: [`${__dirname}/configs/env/.env.${process.env.NODE_ENV}`],
+      validationSchema: validationSchema,
     }),
     WinstonModule.forRoot({
       level: process.env.NODE_ENV === 'production' ? 'info' : 'silly',
@@ -36,6 +39,7 @@ import * as winston from 'winston';
     }),
     FilterModule,
     InterceptorsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
