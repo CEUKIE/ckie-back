@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { AxiosRequestConfig } from 'axios';
 import { Response } from 'express';
 import { postReq } from '../common';
@@ -7,25 +6,19 @@ import { Kakao } from './types';
 
 @Injectable()
 export class KakaoService {
-  constructor(private readonly config: ConfigService) {}
+  private readonly apiKey = process.env.KAKAO_LOGIN_API_KEY ?? '';
+  private readonly redirectUri = process.env.KAKAO_REDIRECT_URI ?? '';
 
   async kakaoRedirect(res: Response) {
-    const apiKey = this.config.get<string>('KAKAO_LOGIN_API_KEY');
-    const redirectUri = this.config.get<string>('KAKAO_REDIRECT_URI');
-
-    res.redirect(
-      `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${apiKey}&redirect_uri=${redirectUri}`,
-    );
+    const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${this.apiKey}&redirect_uri=${this.redirectUri}`;
+    res.redirect(url);
   }
 
   async kakaoLogin(code: string) {
-    const apiKey = this.config.get<string>('KAKAO_LOGIN_API_KEY') ?? '';
-    const redirectUri = this.config.get<string>('KAKAO_REDIRECT_URI') ?? '';
-
     const tokenRequestData: Kakao.KakaoTokenRequest = {
       grant_type: 'authorization_code',
-      client_id: apiKey,
-      redirect_uri: redirectUri,
+      client_id: this.apiKey,
+      redirect_uri: this.redirectUri,
       code,
     };
     const tokenRequestConfig: AxiosRequestConfig = {

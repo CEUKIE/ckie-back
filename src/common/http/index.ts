@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 /**
- * T는 response.data의 타입입니다.
+ * T는 response body의 타입입니다.
  */
 export const postReq = <T>(
   url: string,
