@@ -1,19 +1,23 @@
-import { Controller, Get, Query, Res } from '@nestjs/common';
-import { Response } from 'express';
-import { KakaoService } from './kakao.service';
+import { Body, Controller, Get } from '@nestjs/common';
+
+import { KakaoLoginDto } from './dto/kakao-login-dto';
+import { KakaoClient } from './oauth/kakao.client';
+import { LoginResponse } from './dto/login-response';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: KakaoService) {}
+  constructor(private readonly kakaoService: KakaoClient) {}
 
+  // TODO generate 오버로딩 함수 정의 후 endpoint 수정.
   @Get('kakao')
-  kakaoLogin(@Res() res: Response) {
-    this.authService.kakaoRedirect(res);
+  async kakaoLogin(@Body() dto: KakaoLoginDto): Promise<LoginResponse> {
+    const token: LoginResponse = await this.kakaoService.login(dto);
+    return token;
   }
 
-  // 로그인하면 여기로 redirect.
-  @Get('kakao-redirect')
-  async kakaoRedirect(@Query('code') code: string) {
-    this.authService.kakaoLogin(code);
-  }
+  // 테스트 (삭제 예정)
+  // @Get('kakao')
+  // kakaoLogin(@Query('code') code: string) {
+  //   return this.kakaoService.login(code);
+  // }
 }
