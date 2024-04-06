@@ -11,6 +11,8 @@ import {
 import * as winston from 'winston';
 import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './configs/validationSchema';
+import { PipesModule } from './common/pipes/pipes.module';
+import { UsersModule } from './modules/users.module';
 
 @Module({
   imports: [
@@ -39,7 +41,9 @@ import { validationSchema } from './configs/validationSchema';
     }),
     FilterModule,
     InterceptorsModule,
+    PipesModule,
     AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
