@@ -33,7 +33,7 @@ model User {
   id String @id @default(uuid())
   identifier String @unique
   nickname String @db.Char(15) @unique
-  avatarUrl String @map("avatar_url") // TODO default 이미지
+  avatarUrl String? @map("avatar_url") // TODO default 이미지
   platform Platform
   introduction String
   createdAt DateTime @default(now()) @map("created_at")
