@@ -1,7 +1,7 @@
 export type Platform = 'KAKAO' | 'GOOGLE' | 'NAVER';
 
 export interface TokenData {
-  identifier: string;
+  id: string;
   platform: Platform;
 }
 
