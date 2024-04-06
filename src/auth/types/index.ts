@@ -1,3 +1,10 @@
+export type Platform = 'KAKAO' | 'GOOGLE' | 'NAVER';
+
+export interface TokenData {
+  identifier: string;
+  platform: Platform;
+}
+
 export namespace Kakao {
   export interface KakaoTokenRequest {
     grant_type: 'authorization_code';
