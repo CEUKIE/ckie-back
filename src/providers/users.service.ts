@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 import { UserTypes } from '../types';
 import { UsersRepository } from '../repositories/users.repository';
 import { Platform } from '../auth/types';

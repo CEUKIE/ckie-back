@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controllers/app.controller';
-import { AppService } from './providers/app.service';
-import { FilterModule } from './common/filters/filter.module';
 import { ConfigModule } from '@nestjs/config';
-import { InterceptorsModule } from './common/interceptors/interceptors.module';
+import * as winston from 'winston';
 import {
   WinstonModule,
   utilities as nestWinstonModuleUtilities,
 } from 'nest-winston';
-import * as winston from 'winston';
+
+import { AppController } from './controllers/app.controller';
+import { AppService } from './providers/app.service';
+import { FilterModule } from './common/filters/filter.module';
+import { InterceptorsModule } from './common/interceptors/interceptors.module';
 import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './configs/validationSchema';
 import { PipesModule } from './common/pipes/pipes.module';
