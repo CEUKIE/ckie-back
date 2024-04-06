@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { UserTypes } from '../types';
 import { UsersRepository } from '../repositories/users.repository';
-import { Platform } from '../auth/types';
+import { Platform, TokenData } from '../auth/types';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()
@@ -12,17 +12,20 @@ export class UsersService {
     private readonly authService: AuthService,
   ) {}
 
-  async login(identifier: string, platform: Platform) {
-    return await this.authService.generateAccessToken({ identifier, platform });
+  async login(data: TokenData) {
+    return await this.authService.generateAccessToken(data);
   }
 
-  async register(data: UserTypes.CreateUserData): Promise<string> {
+  async register(
+    data: UserTypes.CreateUserData,
+  ): Promise<UserTypes.CreateReturnData> {
     return await this.usersRepository.create(data);
   }
 
   async getUserByIdentifier(
     identifier: string,
-  ): Promise<UserTypes.UserDetail | null> {
-    return this.usersRepository.findOneByIdentifier(identifier);
+    platform: Platform,
+  ): Promise<UserTypes.UserForLogin | null> {
+    return this.usersRepository.findOneByIdentifier(identifier, platform);
   }
 }
