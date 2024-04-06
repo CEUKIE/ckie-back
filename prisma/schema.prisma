@@ -14,19 +14,19 @@ datasource db {
 }
 
 enum Platform {
-  kakao
-  google
-  naver
+  KAKAO
+  GOOGLE
+  NAVER
 }
 
 enum WeightUnit {
-  g
-  kg
+  G
+  KG
 }
 
 enum Gender {
-  male
-  female
+  MALE
+  FEMALE
 }
 
 model User {
