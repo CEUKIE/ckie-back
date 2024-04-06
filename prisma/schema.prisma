@@ -14,24 +14,24 @@ datasource db {
 }
 
 enum Platform {
-  KAKAO
-  GOOGLE
-  NAVER
+  kakao
+  google
+  naver
 }
 
 enum WeightUnit {
-  G
-  KG
+  g
+  kg
 }
 
 enum Gender {
-  MALE
-  FEMALE
+  male
+  female
 }
 
 model User {
   id String @id @default(uuid())
-  identifier String
+  identifier String @unique
   nickname String @db.Char(15) @unique
   avatarUrl String @map("avatar_url") // TODO default 이미지
   platform Platform
