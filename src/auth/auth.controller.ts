@@ -1,4 +1,4 @@
-import { Body, Controller, Get } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 
 import { KakaoLoginDto } from './dto/kakao-login-dto';
 import { KakaoClient } from './oauth/kakao.client';
@@ -9,7 +9,7 @@ export class AuthController {
   constructor(private readonly kakaoService: KakaoClient) {}
 
   // TODO generate 오버로딩 함수 정의 후 endpoint 수정.
-  @Get('kakao')
+  @Post('kakao')
   async kakaoLogin(@Body() dto: KakaoLoginDto): Promise<LoginResponse> {
     const token: LoginResponse = await this.kakaoService.login(dto);
     return token;
