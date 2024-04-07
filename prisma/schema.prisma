@@ -12,3 +12,131 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Platform {
+  KAKAO
+  GOOGLE
+  NAVER
+}
+
+enum WeightUnit {
+  G
+  KG
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+model User {
+  id String @id @default(uuid())
+  identifier String @unique
+  nickname String @db.Char(15) @unique
+  avatarUrl String? @map("avatar_url") // TODO default 이미지
+  platform Platform
+  introduction String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  individual Individual[]
+
+  @@map("user")
+}
+
+model Individual {
+  id String @id @default(uuid())
+  name String @db.Char(15)
+  weight Float
+  weightUnit WeightUnit @map("weight_unit")
+  memo String @db.VarChar(50)
+  gender Gender
+  hatchedAt DateTime @map("hatched_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  individualImage IndividualImage[]
+  plans Plan[]
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  speices Species @relation(fields: [speicesId], references: [id])
+  speicesId String
+  cage Cage @relation(fields: [cageId], references: [id])
+  cageId String
+
+  @@map("individual")
+}
+
+model IndividualImage {
+  id String @id @default(uuid())
+  url String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  individual Individual @relation(fields: [individualId], references: [id])
+  individualId String
+
+  @@map("individual_image")
+}
+
+model Species {
+  id String @id @default(uuid())
+  name String @db.Char(20)
+  optimalTemperature Float @map("optimal_temperature")
+  optiamlHumidity Float @map("optimal_humidity")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  individuals Individual[]
+
+  @@map("species")
+}
+
+model Plan {
+  id String @id @default(uuid())
+  targetDatetime DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  planCategory PlanCategory @relation(fields: [planCategoryId], references: [id])
+  planCategoryId String
+  individual Individual @relation(fields: [individualId], references: [id])
+  individualId String
+
+  @@map("plan")
+}
+
+model PlanCategory {
+  id String @id @default(uuid())
+  name String @db.Char(15)
+  colorHex String @db.Char(7)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  plans Plan[]
+
+  @@map("plan_category")
+}
+
+model Cage {
+  id String @id @default(uuid())
+  name String @db.Char(15)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  individuals Individual[]
+  cageStates CageState[]
+
+  @@map("cage")
+}
+
+model CageState {
+  id String @id @default(uuid())
+  temperature Float
+  humidity Float
+  createdAt DateTime @default(now()) @map("created_at")
+
+  cage Cage @relation(fields: [cageId], references: [id])
+  cageId String
+
+  @@map("cage_state")
+}

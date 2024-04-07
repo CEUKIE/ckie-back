@@ -6,7 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Observable, tap } from 'rxjs';
 import { Logger } from 'winston';

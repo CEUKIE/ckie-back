@@ -1,20 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './controllers/app.controller';
-import { AppService } from './providers/app.service';
-import { FilterModule } from './common/filters/filter.module';
 import { ConfigModule } from '@nestjs/config';
-import { InterceptorsModule } from './common/interceptors/interceptors.module';
+import * as winston from 'winston';
 import {
   WinstonModule,
   utilities as nestWinstonModuleUtilities,
 } from 'nest-winston';
-import * as winston from 'winston';
+
+import { AppController } from './controllers/app.controller';
+import { AppService } from './providers/app.service';
+import { FilterModule } from './common/filters/filter.module';
+import { InterceptorsModule } from './common/interceptors/interceptors.module';
+import { AuthModule } from './auth/auth.module';
+import { validationSchema } from './configs/validationSchema';
+import { PipesModule } from './common/pipes/pipes.module';
+import { UsersModule } from './modules/users.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`./configs/env/.env.${process.env.NODE_ENV}`],
+      envFilePath: [`${__dirname}/configs/env/.env.${process.env.NODE_ENV}`],
+      validationSchema: validationSchema,
     }),
     WinstonModule.forRoot({
       level: process.env.NODE_ENV === 'production' ? 'info' : 'silly',
@@ -36,6 +42,9 @@ import * as winston from 'winston';
     }),
     FilterModule,
     InterceptorsModule,
+    PipesModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
