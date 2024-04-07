@@ -32,4 +32,19 @@ export class UsersPrismaRepository implements UsersRepository {
       },
     });
   }
+
+  async findOneById(id: string): Promise<UserTypes.UserDetail | null> {
+    return await this.prisma.user.findUnique({
+      select: {
+        id: true,
+        nickname: true,
+        avatarUrl: true,
+        platform: true,
+        introduction: true,
+      },
+      where: {
+        id,
+      },
+    });
+  }
 }
