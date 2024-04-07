@@ -7,5 +7,5 @@ export const validationSchema = Joi.object({
   KAKAO_TOKEN_URL: Joi.string().required(),
   DATABASE_URL: Joi.string().required(),
   JWT_SECRET_KEY: Joi.string().required(),
-  JWT_TOKEN_EXPIRATION_TIME: Joi.string().required(),
+  JWT_TOKEN_EXPIRATION_TIME: Joi.number().required(),
 });
