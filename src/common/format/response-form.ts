@@ -12,4 +12,8 @@ export class ResponseForm<T> {
   static ok<T>(data?: T) {
     return new ResponseForm(HttpStatus.OK, data);
   }
+
+  static created<T>(data?: T) {
+    return new ResponseForm(HttpStatus.CREATED, data);
+  }
 }
