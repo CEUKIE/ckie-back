@@ -4,16 +4,7 @@ import { AppModule } from './src/app.module';
 // import { FastifyAdaptor } from "@nestjs/platform-fastify";
 
 const NESTIA_CONFIG: INestiaConfig = {
-  input: async () => {
-    const app = await NestFactory.create(AppModule);
-    // const app = await NestFactory.create(YourModule, new FastifyAdaptor());
-    // app.setGlobalPrefix("api");
-    // app.enableVersioning({
-    //     type: VersioningType.URI,
-    //     prefix: "v",
-    // })
-    return app;
-  },
+  input: ['src/controllers', 'src/auth'],
   swagger: {
     output: 'dist/swagger.json',
     security: {
