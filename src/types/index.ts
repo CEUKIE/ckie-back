@@ -58,3 +58,12 @@ export namespace IndividualTypes {
     speciesId: string;
   }
 }
+
+export namespace SpeciesTypes {
+  export interface Species {
+    id: string;
+    name: string;
+    optimalTemperature: number;
+    optiamlHumidity: number;
+  }
+}
