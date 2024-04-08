@@ -15,6 +15,7 @@ import { SpeciesService } from '../providers/species.service';
 import { ResponseForm } from '../common/format/response-form';
 import { UpdateSpeciesDto } from '../dto/species/update-species.dto';
 
+// TODO write 기능은 ADMIN 권한으로 설정하기.
 @Controller('species')
 export class SpeciesController {
   constructor(private readonly speciesService: SpeciesService) {}
