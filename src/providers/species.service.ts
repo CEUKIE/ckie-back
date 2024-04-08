@@ -20,6 +20,10 @@ export class SpeciesService {
     return await this.speciesRepository.findAll();
   }
 
+  async findOneById(id: string) {
+    return await this.findOneByIdOrThow(id);
+  }
+
   async update(id: string, dto: UpdateSpeciesDto) {
     const { name } = dto;
     name && (await this.checkDuplicateName(name));

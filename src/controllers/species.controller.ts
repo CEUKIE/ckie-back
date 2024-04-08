@@ -43,6 +43,18 @@ export class SpeciesController {
 
   /**
    * @tag species
+   * @summary 종 id로 조회
+   * @param id 종 id
+   * @returns 종 데이터
+   */
+  @Get(':id')
+  async getOneById(@Param('id', ParseUUIDPipe) id: string) {
+    const response = await this.speciesService.findOneById(id);
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag species
    * @summary 종 데이터 수정
    * @param id 종 id
    * @param dto 수정할 데이터
