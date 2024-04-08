@@ -14,6 +14,8 @@ import { AuthModule } from './auth/auth.module';
 import { validationSchema } from './configs/validationSchema';
 import { PipesModule } from './common/pipes/pipes.module';
 import { UsersModule } from './modules/users.module';
+import { IndividualsModule } from './modules/individuals.module';
+import { SpeciesModule } from './modules/species.module';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { UsersModule } from './modules/users.module';
     PipesModule,
     AuthModule,
     UsersModule,
+    IndividualsModule,
+    SpeciesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
