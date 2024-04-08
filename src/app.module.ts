@@ -21,7 +21,11 @@ import { SpeciesModule } from './modules/species.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`${__dirname}/configs/env/.env.${process.env.NODE_ENV}`],
+      envFilePath: [
+        `${__dirname}/configs/env/.env.${
+          process.env.NODE_ENV === 'production' ? 'production' : 'development'
+        }`,
+      ],
       validationSchema: validationSchema,
     }),
     WinstonModule.forRoot({
