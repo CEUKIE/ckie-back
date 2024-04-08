@@ -36,6 +36,7 @@ model User {
   avatarUrl String? @map("avatar_url") // TODO default 이미지
   platform Platform
   introduction String
+  deleted DateTime?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -81,9 +82,11 @@ model IndividualImage {
 
 model Species {
   id String @id @default(uuid())
-  name String @db.Char(20)
-  optimalTemperature Float @map("optimal_temperature")
-  optiamlHumidity Float @map("optimal_humidity")
+  name String @db.Char(20) @unique
+  minTemperature Float @map("min_temperature")
+  maxTemperature Float @map("max_temperature")
+  minHumidity Float @map("min_humidity")
+  maxHumidity Float @map("max_humidity")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 

@@ -63,7 +63,12 @@ export namespace SpeciesTypes {
   export interface Species {
     id: string;
     name: string;
-    optimalTemperature: number;
-    optiamlHumidity: number;
+    minTemperature: number;
+    maxTemperature: number;
+    minHumidity: number;
+    maxHumidity: number;
   }
+
+  export interface CreateSpeciesData extends Omit<Species, 'id'> {}
+  export type UpdateSpeciesData = Partial<CreateSpeciesData>;
 }

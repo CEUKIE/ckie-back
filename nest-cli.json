@@ -8,6 +8,10 @@
       {
         "include": "./configs/env/.env.*",
         "outDir": "./dist/src"
+      },
+      {
+        "include": "./configs/swagger/swagger.json",
+        "outDir": "./dist/src"
       }
     ]
   }

@@ -25,15 +25,15 @@ export class IndividualsService {
 
   async findUserByIdOrThrow(id: string) {
     const user = await this.usersRepository.findOneById(id);
-
     if (!user) throw new BadRequestException('존재하지 않는 회원.');
+
     return user;
   }
 
   async findSpeciesByIdOrThrow(id: string) {
     const species = await this.speciesRepository.findOneById(id);
-
     if (!species) throw new BadRequestException('존재하지 않는 종');
+
     return species;
   }
 }
