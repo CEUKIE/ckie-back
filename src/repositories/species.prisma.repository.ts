@@ -85,4 +85,10 @@ export class SpeciesPrismaRepository implements SpeciesRepository {
         maxHumidity: v.maxHumidity,
       }));
   }
+
+  async delete(id: string) {
+    return this.prisma.species.delete({ where: { id } }).then((v) => ({
+      name: v.name,
+    }));
+  }
 }

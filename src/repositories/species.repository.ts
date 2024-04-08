@@ -9,6 +9,7 @@ export interface SpeciesRepository {
     id: string,
     data: SpeciesTypes.UpdateSpeciesData,
   ): Promise<SpeciesTypes.Species>;
+  delete(id: string): Promise<{ name: string }>;
 }
 
 export const SpeciesRepository = Symbol('SpeciesRepository');

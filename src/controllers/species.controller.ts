@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -42,6 +43,7 @@ export class SpeciesController {
 
   /**
    * @tag species
+   * @summary 종 데이터 수정
    * @param id 종 id
    * @param dto 수정할 데이터
    * @returns 수정된 종 데이터
@@ -52,6 +54,18 @@ export class SpeciesController {
     @Body() dto: UpdateSpeciesDto,
   ) {
     const response = await this.speciesService.update(id, dto);
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag species
+   * @summary 종 데이터 삭제
+   * @param id 종 id
+   * @returns 삭제된 종 데이터
+   */
+  @Delete(':id')
+  async remove(@Param('id', ParseUUIDPipe) id: string) {
+    const response = await this.speciesService.delete(id);
     return ResponseForm.ok(response);
   }
 }
