@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 import { CreateSpeciesDto } from '../dto/species/create-species.dto';
@@ -38,6 +39,18 @@ export class SpeciesController {
   @Get()
   async getAll() {
     const response = await this.speciesService.findAll();
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag species
+   * @summary 종 이름으로 조회
+   * @param name 종 이름
+   * @returns 종 데이터
+   */
+  @Get('name')
+  async getOneByName(@Query('name') name: string) {
+    const response = await this.speciesService.findOneByName(name);
     return ResponseForm.ok(response);
   }
 
