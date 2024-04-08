@@ -1,10 +1,15 @@
 import { INestiaConfig } from '@nestia/sdk';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './src/app.module';
 // import { FastifyAdaptor } from "@nestjs/platform-fastify";
 
 const NESTIA_CONFIG: INestiaConfig = {
-  input: ['src/controllers', 'src/auth'],
+  input: async () => {
+    const app = await NestFactory.create(AppModule);
+    return app;
+  },
   swagger: {
-    output: 'dist/swagger.json',
+    output: './src/configs/swagger',
     security: {
       bearer: {
         type: 'apiKey',
