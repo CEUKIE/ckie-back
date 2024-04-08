@@ -22,6 +22,19 @@ export class SpeciesPrismaRepository implements SpeciesRepository {
       }));
   }
 
+  async findAll(): Promise<SpeciesTypes.Species[]> {
+    return await this.prisma.species.findMany({
+      select: {
+        id: true,
+        name: true,
+        minTemperature: true,
+        maxTemperature: true,
+        minHumidity: true,
+        maxHumidity: true,
+      },
+    });
+  }
+
   async findOneById(id: string): Promise<SpeciesTypes.Species | null> {
     return await this.prisma.species.findUnique({
       select: {
