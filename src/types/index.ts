@@ -70,4 +70,5 @@ export namespace SpeciesTypes {
   }
 
   export interface CreateSpeciesData extends Omit<Species, 'id'> {}
+  export type UpdateSpeciesData = Partial<CreateSpeciesData>;
 }

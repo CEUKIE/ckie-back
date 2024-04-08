@@ -66,4 +66,23 @@ export class SpeciesPrismaRepository implements SpeciesRepository {
       },
     });
   }
+
+  async update(
+    id: string,
+    data: Partial<SpeciesTypes.CreateSpeciesData>,
+  ): Promise<SpeciesTypes.Species> {
+    return await this.prisma.species
+      .update({
+        where: { id },
+        data,
+      })
+      .then((v) => ({
+        id: v.id,
+        name: v.name,
+        minTemperature: v.minTemperature,
+        maxTemperature: v.maxTemperature,
+        minHumidity: v.minHumidity,
+        maxHumidity: v.maxHumidity,
+      }));
+  }
 }
