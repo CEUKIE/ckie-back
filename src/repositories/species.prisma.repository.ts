@@ -7,16 +7,49 @@ import { PrismaService } from '../prisma/prisma.service';
 export class SpeciesPrismaRepository implements SpeciesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  create(data: SpeciesTypes.CreateSpeciesData): Promise<SpeciesTypes.Species> {
+    return this.prisma.species
+      .create({
+        data,
+      })
+      .then((v) => ({
+        id: v.id,
+        name: v.name,
+        minTemperature: v.minTemperature,
+        maxTemperature: v.maxTemperature,
+        minHumidity: v.minHumidity,
+        maxHumidity: v.maxHumidity,
+      }));
+  }
+
   async findOneById(id: string): Promise<SpeciesTypes.Species | null> {
     return await this.prisma.species.findUnique({
       select: {
         id: true,
         name: true,
-        optimalTemperature: true,
-        optiamlHumidity: true,
+        minTemperature: true,
+        maxTemperature: true,
+        minHumidity: true,
+        maxHumidity: true,
       },
       where: {
         id,
+      },
+    });
+  }
+
+  async findOneByname(name: string): Promise<SpeciesTypes.Species | null> {
+    return await this.prisma.species.findUnique({
+      select: {
+        id: true,
+        name: true,
+        minTemperature: true,
+        maxTemperature: true,
+        minHumidity: true,
+        maxHumidity: true,
+      },
+      where: {
+        name,
       },
     });
   }
