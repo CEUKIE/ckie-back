@@ -57,6 +57,7 @@ export class CagesPrismaRepository implements CagesRepository {
 
   async update(
     id: string,
+    userId: string,
     data: CageTypes.UpdateCageData,
   ): Promise<CageTypes.Cage> {
     return await this.prisma.cage.update({
@@ -66,8 +67,15 @@ export class CagesPrismaRepository implements CagesRepository {
       },
       where: {
         id,
+        userId,
       },
       data,
+    });
+  }
+
+  async delete(id: string, userId: string): Promise<void> {
+    await this.prisma.cage.delete({
+      where: { id, userId },
     });
   }
 }

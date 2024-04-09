@@ -5,7 +5,12 @@ export interface CagesRepository {
   findAll(): Promise<CageTypes.Cage[]>;
   findAllByUserId(userId: string): Promise<CageTypes.Cage[]>;
   findOneById(id: string): Promise<CageTypes.CageDetail | null>;
-  update(id: string, data: CageTypes.UpdateCageData): Promise<CageTypes.Cage>;
+  update(
+    id: string,
+    userId: string,
+    data: CageTypes.UpdateCageData,
+  ): Promise<CageTypes.Cage>;
+  delete(id: string, userId: string): Promise<void>;
 }
 
 export const CagesRepository = Symbol('CagesRepository');

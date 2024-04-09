@@ -5,6 +5,8 @@ import { CagesController } from '../controllers/cages.controller';
 import { CagesService } from '../providers/cages.service';
 import { AuthModule } from '../auth/auth.module';
 import { PrismaModule } from '../prisma/prisma.module';
+import { UsersRepository } from '../repositories/users.repository';
+import { UsersPrismaRepository } from '../repositories/users.prisma.repository';
 
 @Module({
   imports: [PrismaModule, AuthModule],
@@ -12,6 +14,7 @@ import { PrismaModule } from '../prisma/prisma.module';
   providers: [
     CagesService,
     { provide: CagesRepository, useClass: CagesPrismaRepository },
+    { provide: UsersRepository, useClass: UsersPrismaRepository },
   ],
 })
 export class CagesModule {}

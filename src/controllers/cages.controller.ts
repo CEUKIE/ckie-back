@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -31,10 +32,7 @@ export class CagesController {
    */
   @Post()
   async create(@Body() dto: CreateCageDto, @UserInfo() user: TokenData) {
-    const response = await this.cagesService.create({
-      ...dto,
-      userId: user.id,
-    });
+    const response = await this.cagesService.create(user.id, dto);
     return ResponseForm.created(response);
   }
 
@@ -92,7 +90,21 @@ export class CagesController {
     @Body() dto: UpdateCageDto,
     @UserInfo() user: TokenData,
   ) {
-    const response = await this.cagesService.update(id, dto);
+    const response = await this.cagesService.update(id, user.id, dto);
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag cages
+   * @summary 케이지 데이터 삭제
+   * @security bearer
+   * @param id 케이지 id
+   * @param user access token에서 추출한 회원 정보
+   * @returns 삭제 성공 시 true, 실패 시 false
+   */
+  @Delete(':id')
+  async remove(@Param('id') id: string, @UserInfo() user: TokenData) {
+    const response = await this.cagesService.delete(id, user.id);
     return ResponseForm.ok(response);
   }
 }

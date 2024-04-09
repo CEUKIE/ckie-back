@@ -80,7 +80,9 @@ export namespace CageTypes {
     userId: string;
   }
 
-  export interface UpdateCageData extends Partial<CreateCageData> {}
+  export interface UpdateCageData {
+    name: string;
+  }
 
   export interface Cage extends Omit<CreateCageData, 'userId'> {}
 
