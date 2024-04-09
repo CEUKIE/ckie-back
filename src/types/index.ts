@@ -34,7 +34,7 @@ export namespace IndividualTypes {
     name: string;
     gender: Gender;
     hatchedAt: Date;
-    memo?: string;
+    memo?: string | null;
   }
 
   export interface IndividualDetail {
@@ -70,5 +70,32 @@ export namespace SpeciesTypes {
   }
 
   export interface CreateSpeciesData extends Omit<Species, 'id'> {}
-  export type UpdateSpeciesData = Partial<CreateSpeciesData>;
+  export interface UpdateSpeciesData extends Partial<CreateSpeciesData> {}
+}
+
+export namespace CageTypes {
+  export interface CreateCageData {
+    id: string;
+    name: string;
+    userId: string;
+  }
+
+  export interface UpdateCageData {
+    name: string;
+  }
+
+  export interface Cage extends Omit<CreateCageData, 'userId'> {}
+
+  export interface CageDetail extends Cage {
+    individuals: IndividualTypes.Individual[];
+    cageStates: CageStateTypes.CageState[];
+  }
+}
+
+export namespace CageStateTypes {
+  export interface CageState {
+    temperature: number;
+    humidity: number;
+    createdAt: Date;
+  }
 }

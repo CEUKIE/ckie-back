@@ -5,8 +5,10 @@ import { UsersRepository } from '../repositories/users.repository';
 import { UsersPrismaRepository } from '../repositories/users.prisma.repository';
 import { PrismaModule } from '../prisma/prisma.module';
 import { AuthModule } from '../auth/auth.module';
+import { UsersController } from '../controllers/users.controller';
 
 @Module({
+  controllers: [UsersController],
   imports: [PrismaModule, AuthModule],
   providers: [
     UsersService,
