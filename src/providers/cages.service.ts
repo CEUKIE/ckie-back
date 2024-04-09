@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 import { CagesRepository } from '../repositories/cages.repository';
 import { CageTypes } from '../types';
 
@@ -10,5 +11,9 @@ export class CagesService {
 
   async create(dto: CageTypes.CreateCageData) {
     return await this.cagesRepository.create(dto);
+  }
+
+  async findAllByUserId(userId: string) {
+    return await this.cagesRepository.findAllByUserId(userId);
   }
 }

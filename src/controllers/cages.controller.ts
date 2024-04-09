@@ -1,4 +1,5 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+
 import { CreateCageDto } from '../dto/cage/create-cage.dto';
 import { CagesService } from '../providers/cages.service';
 import { ResponseForm } from '../common/format/response-form';
@@ -10,7 +11,6 @@ import { TokenData } from '../auth/types';
 export class CagesController {
   constructor(private readonly cagesService: CagesService) {}
 
-  // TODO token 테스트, swagger에 인증 정보 등록
   /**
    * @tag cages
    * @summary 케이지 등록
@@ -26,5 +26,19 @@ export class CagesController {
       userId: user.id,
     });
     return ResponseForm.created(response);
+  }
+
+  /**
+   * @tag cages
+   * @summary 자기 케이지 목록 조회
+   * @security bearer
+   * @param user access token에서 추출한 user 데이터
+   * @returns 케이지 목록
+   */
+  @UseGuards(AuthGuard)
+  @Get()
+  async getAllByUserId(@UserInfo() user: TokenData) {
+    const response = await this.cagesService.findAllByUserId(user.id);
+    return ResponseForm.ok(response);
   }
 }
