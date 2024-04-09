@@ -28,6 +28,19 @@ export class CagesController {
     return ResponseForm.created(response);
   }
 
+  // TODO ADMIN 권한 기능.
+  /**
+   * @tag cages
+   * @summary 모든 케이지 목록 조회
+   * @security bearer
+   * @returns 케이지 목록
+   */
+  @Get('all')
+  async getAll() {
+    const response = await this.cagesService.findAll();
+    return ResponseForm.ok(response);
+  }
+
   /**
    * @tag cages
    * @summary 자기 케이지 목록 조회

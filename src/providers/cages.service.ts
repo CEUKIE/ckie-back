@@ -13,6 +13,10 @@ export class CagesService {
     return await this.cagesRepository.create(dto);
   }
 
+  async findAll() {
+    return await this.cagesRepository.findAll();
+  }
+
   async findAllByUserId(userId: string) {
     return await this.cagesRepository.findAllByUserId(userId);
   }
