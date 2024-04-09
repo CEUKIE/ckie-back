@@ -3,6 +3,7 @@ import { CreateIndividualDto } from '../dto/individual/create-individual.dto';
 import { IndividualsRepository } from '../repositories/individuals.repository';
 import { UsersRepository } from '../repositories/users.repository';
 import { SpeciesRepository } from '../repositories/species.repository';
+import { IndividualTypes } from '../types';
 
 @Injectable()
 export class IndividualsService {
@@ -15,12 +16,12 @@ export class IndividualsService {
     private readonly speciesRepository: SpeciesRepository,
   ) {}
 
-  async create(dto: CreateIndividualDto) {
-    const { userId, speciesId } = dto;
+  async create(userId: string, dto: CreateIndividualDto) {
     await this.findUserByIdOrThrow(userId);
-    await this.findSpeciesByIdOrThrow(speciesId);
+    await this.findSpeciesByIdOrThrow(dto.speciesId);
+    const data: IndividualTypes.CreateIndividualData = { ...dto, userId };
 
-    return await this.individualsRepository.create(dto);
+    return await this.individualsRepository.create(data);
   }
 
   async findUserByIdOrThrow(id: string) {
