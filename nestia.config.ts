@@ -13,7 +13,7 @@ const NESTIA_CONFIG: INestiaConfig = {
     security: {
       bearer: {
         type: 'apiKey',
-        name: 'Authorization',
+        name: 'authorization',
         in: 'header',
       },
     },
