@@ -16,6 +16,7 @@ import { PipesModule } from './common/pipes/pipes.module';
 import { UsersModule } from './modules/users.module';
 import { IndividualsModule } from './modules/individuals.module';
 import { SpeciesModule } from './modules/species.module';
+import { CagesModule } from './modules/cages.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { SpeciesModule } from './modules/species.module';
     UsersModule,
     IndividualsModule,
     SpeciesModule,
+    CagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
