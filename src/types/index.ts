@@ -70,7 +70,7 @@ export namespace SpeciesTypes {
   }
 
   export interface CreateSpeciesData extends Omit<Species, 'id'> {}
-  export type UpdateSpeciesData = Partial<CreateSpeciesData>;
+  export interface UpdateSpeciesData extends Partial<CreateSpeciesData> {}
 }
 
 export namespace CageTypes {
@@ -79,6 +79,8 @@ export namespace CageTypes {
     name: string;
     userId: string;
   }
+
+  export interface UpdateCageData extends Partial<CreateCageData> {}
 
   export interface Cage extends Omit<CreateCageData, 'userId'> {}
 

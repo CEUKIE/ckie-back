@@ -54,4 +54,20 @@ export class CagesPrismaRepository implements CagesRepository {
       where: { id },
     });
   }
+
+  async update(
+    id: string,
+    data: CageTypes.UpdateCageData,
+  ): Promise<CageTypes.Cage> {
+    return await this.prisma.cage.update({
+      select: {
+        id: true,
+        name: true,
+      },
+      where: {
+        id,
+      },
+      data,
+    });
+  }
 }

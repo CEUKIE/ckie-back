@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 
 import { CreateCageDto } from '../dto/cage/create-cage.dto';
 import { CagesService } from '../providers/cages.service';
@@ -6,6 +14,7 @@ import { ResponseForm } from '../common/format/response-form';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { UserInfo } from '../common/decorators/user.decorator';
 import { TokenData } from '../auth/types';
+import { UpdateCageDto } from '../dto/cage/update-cage.dto';
 
 @Controller('cages')
 @UseGuards(AuthGuard)
@@ -17,6 +26,7 @@ export class CagesController {
    * @summary 케이지 등록
    * @security bearer
    * @param dto 케이지 등록 데이터
+   * @param user access token에서 추출한 회원 정보
    * @returns 등록된 케이지 데이터
    */
   @Post()
@@ -45,7 +55,7 @@ export class CagesController {
    * @tag cages
    * @summary 자기 케이지 목록 조회
    * @security bearer
-   * @param user access token에서 추출한 user 데이터
+   * @param user access token에서 추출한 user 정보
    * @returns 케이지 목록
    */
   @Get()
@@ -64,6 +74,25 @@ export class CagesController {
   @Get(':id')
   async getOneById(@Param('id') id: string) {
     const response = await this.cagesService.findOneById(id);
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag cages
+   * @summary 케이지 정보 수정
+   * @security bearer
+   * @param id 케이지 id
+   * @param dto 케이지 수정 데이터
+   * @param user access token에서 추출한 회원 정보
+   * @returns 수정된 케이지 데이터
+   */
+  @Patch(':id')
+  async modify(
+    @Param('id') id: string,
+    @Body() dto: UpdateCageDto,
+    @UserInfo() user: TokenData,
+  ) {
+    const response = await this.cagesService.update(id, dto);
     return ResponseForm.ok(response);
   }
 }

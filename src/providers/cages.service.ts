@@ -24,4 +24,8 @@ export class CagesService {
   async findOneById(id: string) {
     return await this.cagesRepository.findOneById(id);
   }
+
+  async update(id: string, data: CageTypes.UpdateCageData) {
+    return await this.cagesRepository.update(id, data);
+  }
 }
