@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 
 import { CreateCageDto } from '../dto/cage/create-cage.dto';
 import { CagesService } from '../providers/cages.service';
@@ -8,6 +8,7 @@ import { UserInfo } from '../common/decorators/user.decorator';
 import { TokenData } from '../auth/types';
 
 @Controller('cages')
+@UseGuards(AuthGuard)
 export class CagesController {
   constructor(private readonly cagesService: CagesService) {}
 
@@ -18,7 +19,6 @@ export class CagesController {
    * @param dto 케이지 등록 데이터
    * @returns 등록된 케이지 데이터
    */
-  @UseGuards(AuthGuard)
   @Post()
   async create(@Body() dto: CreateCageDto, @UserInfo() user: TokenData) {
     const response = await this.cagesService.create({
@@ -48,10 +48,22 @@ export class CagesController {
    * @param user access token에서 추출한 user 데이터
    * @returns 케이지 목록
    */
-  @UseGuards(AuthGuard)
   @Get()
   async getAllByUserId(@UserInfo() user: TokenData) {
     const response = await this.cagesService.findAllByUserId(user.id);
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag cages
+   * @summary 케이지 상세 정보 조회
+   * @security bearer
+   * @param id 케이지 id
+   * @returns 케이지 상세 정보
+   */
+  @Get(':id')
+  async getOneById(@Param('id') id: string) {
+    const response = await this.cagesService.findOneById(id);
     return ResponseForm.ok(response);
   }
 }

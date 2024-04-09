@@ -20,4 +20,8 @@ export class CagesService {
   async findAllByUserId(userId: string) {
     return await this.cagesRepository.findAllByUserId(userId);
   }
+
+  async findOneById(id: string) {
+    return await this.cagesRepository.findOneById(id);
+  }
 }

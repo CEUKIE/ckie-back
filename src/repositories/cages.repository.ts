@@ -4,6 +4,7 @@ export interface CagesRepository {
   create(data: CageTypes.CreateCageData): Promise<CageTypes.Cage>;
   findAll(): Promise<CageTypes.Cage[]>;
   findAllByUserId(userId: string): Promise<CageTypes.Cage[]>;
+  findOneById(id: string): Promise<CageTypes.CageDetail | null>;
 }
 
 export const CagesRepository = Symbol('CagesRepository');

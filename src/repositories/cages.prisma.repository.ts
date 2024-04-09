@@ -28,4 +28,30 @@ export class CagesPrismaRepository implements CagesRepository {
       where: { userId },
     });
   }
+
+  async findOneById(id: string): Promise<CageTypes.CageDetail | null> {
+    return await this.prisma.cage.findUnique({
+      select: {
+        id: true,
+        name: true,
+        individuals: {
+          select: {
+            id: true,
+            name: true,
+            gender: true,
+            hatchedAt: true,
+            memo: true,
+          },
+        },
+        cageStates: {
+          select: {
+            temperature: true,
+            humidity: true,
+            createdAt: true,
+          },
+        },
+      },
+      where: { id },
+    });
+  }
 }
