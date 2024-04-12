@@ -12,7 +12,6 @@ import {
 import { CreateIndividualDto } from '../dto/individual/create-individual.dto';
 import { IndividualsService } from '../providers/individuals.service';
 import { ResponseForm } from '../common/format/response-form';
-import { CreateIndividualResponse } from '../dto/individual/create-response';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { UserInfo } from '../common/decorators/user.decorator';
 import { TokenData } from '../auth/types';
@@ -31,10 +30,7 @@ export class IndividualsController {
    * @returns 생성된 개체 상세 정보
    */
   @Post()
-  async create(
-    @Body() dto: CreateIndividualDto,
-    @UserInfo() user: TokenData,
-  ): Promise<ResponseForm<CreateIndividualResponse>> {
+  async create(@Body() dto: CreateIndividualDto, @UserInfo() user: TokenData) {
     const response = await this.individualsService.create(user.id, dto);
     return ResponseForm.created(response);
   }
@@ -52,8 +48,18 @@ export class IndividualsController {
     return ResponseForm.ok(response);
   }
 
-  // @Get(':id')
-  // getOneDetail() {}
+  /**
+   * @tag individuals
+   * @security bearer
+   * @summary 개체 상세 조회
+   * @param id 개체 id
+   * @returns 개체 상세 정보
+   */
+  @Get(':id')
+  async getOneDetail(@Param('id') id: string) {
+    const response = await this.individualsService.findOneById(id);
+    return ResponseForm.ok(response);
+  }
 
   /**
    * @tag individuals

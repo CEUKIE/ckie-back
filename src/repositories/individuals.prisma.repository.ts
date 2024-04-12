@@ -36,6 +36,25 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
     });
   }
 
+  async findOneById(
+    id: string,
+  ): Promise<IndividualTypes.IndividualDetail | null> {
+    return await this.prisma.individual.findUnique({
+      select: {
+        id: true,
+        name: true,
+        gender: true,
+        hatchedAt: true,
+        memo: true,
+        weight: true,
+        weightUnit: true,
+      },
+      where: {
+        id,
+      },
+    });
+  }
+
   async update(
     id: string,
     data: IndividualTypes.UpdateIndividual,

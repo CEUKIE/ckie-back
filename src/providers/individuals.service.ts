@@ -29,6 +29,10 @@ export class IndividualsService {
     return await this.individualsRepository.findAllByUserId(userId);
   }
 
+  async findOneById(id: string) {
+    return await this.individualsRepository.findOneById(id);
+  }
+
   async update(id: string, dto: UpdateIndividualDto) {
     return await this.individualsRepository.update(id, dto);
   }
