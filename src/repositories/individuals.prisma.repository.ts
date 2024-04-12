@@ -22,4 +22,17 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
         weightUnit: v.weightUnit,
       }));
   }
+
+  async findAllByUserId(userId: string): Promise<IndividualTypes.Individual[]> {
+    return await this.prisma.individual.findMany({
+      select: {
+        id: true,
+        name: true,
+        gender: true,
+        hatchedAt: true,
+        memo: true,
+      },
+      where: { userId },
+    });
+  }
 }

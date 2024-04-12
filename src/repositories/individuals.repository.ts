@@ -4,7 +4,7 @@ export interface IndividualsRepository {
   create(
     data: IndividualTypes.CreateIndividualData,
   ): Promise<IndividualTypes.IndividualDetail>;
-  // findAll(): Promise<IndividualTypes.Individual>;
+  findAllByUserId(userId: string): Promise<IndividualTypes.Individual[]>;
   // findOneById(id: string): Promise<IndividualTypes.IndividualDetail>;
 }
 

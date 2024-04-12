@@ -36,8 +36,18 @@ export class IndividualsController {
     return ResponseForm.created(response);
   }
 
-  // @Get()
-  // getAll() {}
+  /**
+   * @tag individuals
+   * @summary 자신 개체 목록 조회
+   * @security bearer
+   * @param user access token에서 추출한 회원 정보
+   * @returns 개체 목록
+   */
+  @Get()
+  async getAll(@UserInfo() user: TokenData) {
+    const response = await this.individualsService.findAllByUserId(user.id);
+    return ResponseForm.ok(response);
+  }
 
   // @Get(':id')
   // getOneDetail() {}

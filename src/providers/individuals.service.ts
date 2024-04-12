@@ -24,6 +24,10 @@ export class IndividualsService {
     return await this.individualsRepository.create(data);
   }
 
+  async findAllByUserId(userId: string) {
+    return await this.individualsRepository.findAllByUserId(userId);
+  }
+
   async findUserByIdOrThrow(id: string) {
     const user = await this.usersRepository.findOneById(id);
     if (!user) throw new BadRequestException('존재하지 않는 회원.');
