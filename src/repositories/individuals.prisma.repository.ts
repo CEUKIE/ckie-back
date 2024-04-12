@@ -32,7 +32,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
         hatchedAt: true,
         memo: true,
       },
-      where: { userId },
+      where: { userId, deleted: null },
     });
   }
 
@@ -51,6 +51,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       },
       where: {
         id,
+        deleted: null,
       },
     });
   }
