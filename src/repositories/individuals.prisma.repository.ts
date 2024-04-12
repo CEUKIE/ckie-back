@@ -35,4 +35,25 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       where: { userId },
     });
   }
+
+  async update(
+    id: string,
+    data: IndividualTypes.UpdateIndividual,
+  ): Promise<IndividualTypes.IndividualDetail> {
+    return this.prisma.individual.update({
+      select: {
+        id: true,
+        name: true,
+        gender: true,
+        hatchedAt: true,
+        memo: true,
+        weight: true,
+        weightUnit: true,
+      },
+      where: {
+        id,
+      },
+      data,
+    });
+  }
 }

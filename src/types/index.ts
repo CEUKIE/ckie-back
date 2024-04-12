@@ -57,6 +57,8 @@ export namespace IndividualTypes {
     userId: string;
     speciesId: string;
   }
+
+  export interface UpdateIndividual extends Partial<CreateIndividualData> {}
 }
 
 export namespace SpeciesTypes {

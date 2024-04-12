@@ -4,6 +4,7 @@ import { IndividualsRepository } from '../repositories/individuals.repository';
 import { UsersRepository } from '../repositories/users.repository';
 import { SpeciesRepository } from '../repositories/species.repository';
 import { IndividualTypes } from '../types';
+import { UpdateIndividualDto } from '../dto/individual/update-individual.dto';
 
 @Injectable()
 export class IndividualsService {
@@ -26,6 +27,10 @@ export class IndividualsService {
 
   async findAllByUserId(userId: string) {
     return await this.individualsRepository.findAllByUserId(userId);
+  }
+
+  async update(id: string, dto: UpdateIndividualDto) {
+    return await this.individualsRepository.update(id, dto);
   }
 
   async findUserByIdOrThrow(id: string) {

@@ -3,10 +3,12 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
+
 import { CreateIndividualDto } from '../dto/individual/create-individual.dto';
 import { IndividualsService } from '../providers/individuals.service';
 import { ResponseForm } from '../common/format/response-form';
@@ -14,6 +16,7 @@ import { CreateIndividualResponse } from '../dto/individual/create-response';
 import { AuthGuard } from '../common/guards/auth.guard';
 import { UserInfo } from '../common/decorators/user.decorator';
 import { TokenData } from '../auth/types';
+import { UpdateIndividualDto } from '../dto/individual/update-individual.dto';
 
 @UseGuards(AuthGuard)
 @Controller('individuals')
@@ -52,8 +55,19 @@ export class IndividualsController {
   // @Get(':id')
   // getOneDetail() {}
 
-  // @Patch(':id')
-  // modify() {}
+  /**
+   * @tag individuals
+   * @summary 개체 정보 수정
+   * @security bearer
+   * @param id 개체 id
+   * @param dto 수정할 데이터
+   * @returns 수정된 개체 정보
+   */
+  @Patch(':id')
+  async modify(@Param('id') id: string, dto: UpdateIndividualDto) {
+    const response = await this.individualsService.update(id, dto);
+    return ResponseForm.ok(response);
+  }
 
   // @Delete()
   // remove() {}
