@@ -75,6 +75,16 @@ export class IndividualsController {
     return ResponseForm.ok(response);
   }
 
-  // @Delete()
-  // remove() {}
+  /**
+   * @tag individuals
+   * @summary 개체 삭제
+   * @security bearer
+   * @param id 개체 id
+   * @returns 삭제 성공 시 true, 실패 시 false
+   */
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    const response = await this.individualsService.delete(id);
+    return ResponseForm.ok(response);
+  }
 }

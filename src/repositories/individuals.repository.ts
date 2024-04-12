@@ -10,6 +10,7 @@ export interface IndividualsRepository {
     id: string,
     data: IndividualTypes.UpdateIndividual,
   ): Promise<IndividualTypes.IndividualDetail>;
+  delete(id: string): Promise<void>;
 }
 
 export const IndividualsRepository = Symbol('IndividualsRepository');

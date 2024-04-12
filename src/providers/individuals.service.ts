@@ -34,7 +34,17 @@ export class IndividualsService {
   }
 
   async update(id: string, dto: UpdateIndividualDto) {
+    await this.findIndividualByIdOrThrow(id);
     return await this.individualsRepository.update(id, dto);
+  }
+
+  async delete(id: string) {
+    try {
+      await this.individualsRepository.delete(id);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   async findUserByIdOrThrow(id: string) {
@@ -49,5 +59,12 @@ export class IndividualsService {
     if (!species) throw new BadRequestException('존재하지 않는 종');
 
     return species;
+  }
+
+  async findIndividualByIdOrThrow(id: string) {
+    const individual = await this.individualsRepository.findOneById(id);
+    if (!individual) throw new BadRequestException('존재하지 않는 개체');
+
+    return individual;
   }
 }

@@ -75,4 +75,13 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       data,
     });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.individual.update({
+      data: {
+        deleted: new Date(),
+      },
+      where: { id },
+    });
+  }
 }
