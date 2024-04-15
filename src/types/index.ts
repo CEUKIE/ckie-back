@@ -101,3 +101,7 @@ export namespace CageStateTypes {
     createdAt: Date;
   }
 }
+
+export interface ImageResponse {
+  filePath: string;
+}
