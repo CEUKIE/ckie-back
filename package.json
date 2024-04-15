@@ -20,11 +20,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:e2e": "dotenv -e ./src/configs/env/.env.test -- jest --config ./test/jest-e2e.json",
     "prisma:dev": "npm run prisma-push:dev && npm run prisma-gen:dev",
     "prisma-push:dev": "dotenv -e ./src/configs/env/.env.development -- npx prisma db push",
     "prisma-gen:dev": "dotenv -e ./src/configs/env/.env.development -- npx prisma generate",
-    "prepare": "ts-patch install && typia patch"
+    "prepare": "ts-patch install && typia patch",
+    "docker:up": "docker compose up -d && npx prisma db push",
+    "docker:down": "docker compose down"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.554.0",
