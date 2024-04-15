@@ -3,6 +3,8 @@ import { CreateIndividualDto } from '../dto/individual/create-individual.dto';
 import { IndividualsRepository } from '../repositories/individuals.repository';
 import { UsersRepository } from '../repositories/users.repository';
 import { SpeciesRepository } from '../repositories/species.repository';
+import { IndividualTypes } from '../types';
+import { UpdateIndividualDto } from '../dto/individual/update-individual.dto';
 
 @Injectable()
 export class IndividualsService {
@@ -15,12 +17,34 @@ export class IndividualsService {
     private readonly speciesRepository: SpeciesRepository,
   ) {}
 
-  async create(dto: CreateIndividualDto) {
-    const { userId, speciesId } = dto;
+  async create(userId: string, dto: CreateIndividualDto) {
     await this.findUserByIdOrThrow(userId);
-    await this.findSpeciesByIdOrThrow(speciesId);
+    await this.findSpeciesByIdOrThrow(dto.speciesId);
+    const data: IndividualTypes.CreateIndividualData = { ...dto, userId };
 
-    return await this.individualsRepository.create(dto);
+    return await this.individualsRepository.create(data);
+  }
+
+  async findAllByUserId(userId: string) {
+    return await this.individualsRepository.findAllByUserId(userId);
+  }
+
+  async findOneById(id: string) {
+    return await this.individualsRepository.findOneById(id);
+  }
+
+  async update(id: string, dto: UpdateIndividualDto) {
+    await this.findIndividualByIdOrThrow(id);
+    return await this.individualsRepository.update(id, dto);
+  }
+
+  async delete(id: string) {
+    try {
+      await this.individualsRepository.delete(id);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   async findUserByIdOrThrow(id: string) {
@@ -35,5 +59,12 @@ export class IndividualsService {
     if (!species) throw new BadRequestException('존재하지 않는 종');
 
     return species;
+  }
+
+  async findIndividualByIdOrThrow(id: string) {
+    const individual = await this.individualsRepository.findOneById(id);
+    if (!individual) throw new BadRequestException('존재하지 않는 개체');
+
+    return individual;
   }
 }

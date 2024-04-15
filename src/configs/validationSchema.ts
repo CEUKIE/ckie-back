@@ -8,4 +8,8 @@ export const validationSchema = Joi.object({
   DATABASE_URL: Joi.string().required(),
   JWT_SECRET_KEY: Joi.string().required(),
   JWT_TOKEN_EXPIRATION_TIME: Joi.number().required(),
+  S3_REGION: Joi.string().required(),
+  S3_ACCESS_KEY: Joi.string().required(),
+  S3_SECRET_KEY: Joi.string().required(),
+  S3_BUCKET_NAME: Joi.string().required(),
 });

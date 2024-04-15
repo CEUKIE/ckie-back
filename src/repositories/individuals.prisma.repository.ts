@@ -22,4 +22,67 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
         weightUnit: v.weightUnit,
       }));
   }
+
+  async findAllByUserId(userId: string): Promise<IndividualTypes.Individual[]> {
+    return await this.prisma.individual.findMany({
+      select: {
+        id: true,
+        name: true,
+        gender: true,
+        hatchedAt: true,
+        memo: true,
+      },
+      where: { userId, deleted: null },
+    });
+  }
+
+  async findOneById(
+    id: string,
+  ): Promise<IndividualTypes.IndividualDetail | null> {
+    return await this.prisma.individual.findUnique({
+      select: {
+        id: true,
+        name: true,
+        gender: true,
+        hatchedAt: true,
+        memo: true,
+        weight: true,
+        weightUnit: true,
+      },
+      where: {
+        id,
+        deleted: null,
+      },
+    });
+  }
+
+  async update(
+    id: string,
+    data: IndividualTypes.UpdateIndividual,
+  ): Promise<IndividualTypes.IndividualDetail> {
+    return this.prisma.individual.update({
+      select: {
+        id: true,
+        name: true,
+        gender: true,
+        hatchedAt: true,
+        memo: true,
+        weight: true,
+        weightUnit: true,
+      },
+      where: {
+        id,
+      },
+      data,
+    });
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.individual.update({
+      data: {
+        deleted: new Date(),
+      },
+      where: { id },
+    });
+  }
 }

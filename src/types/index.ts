@@ -57,6 +57,8 @@ export namespace IndividualTypes {
     userId: string;
     speciesId: string;
   }
+
+  export interface UpdateIndividual extends Partial<CreateIndividualData> {}
 }
 
 export namespace SpeciesTypes {
@@ -98,4 +100,8 @@ export namespace CageStateTypes {
     humidity: number;
     createdAt: Date;
   }
+}
+
+export interface ImageResponse {
+  filePath: string;
 }
