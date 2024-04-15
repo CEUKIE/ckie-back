@@ -18,7 +18,7 @@ export const multerOptionsFactory = (config: ConfigService): MulterOptions => {
       s3,
       bucket: config.get<string>('S3_BUCKET_NAME')!,
       acl: 'public-read',
-      key(_req, file, done) {
+      key(req, file, done) {
         try {
           const folder = 'images';
           const ext = path.extname(file.originalname);
