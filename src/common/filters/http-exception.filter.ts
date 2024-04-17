@@ -39,15 +39,16 @@ export class HttpExceptionFilter implements ExceptionFilter {
       errorMessage = errorMessage.message;
     }
 
-    this.logger.warn(
-      `Error to ${req.method} ${
-        req.url
-      }${ipMessage} ${paramMessage} ${queryMessage} ${bodyMessage} \nstatusCode : ${status} \nmessage : ${JSON.stringify(
-        errorMessage,
-        null,
-        2,
-      )}`,
-    );
+    process.env.NODE_ENV !== 'test' &&
+      this.logger.warn(
+        `Error to ${req.method} ${
+          req.url
+        }${ipMessage} ${paramMessage} ${queryMessage} ${bodyMessage} \nstatusCode : ${status} \nmessage : ${JSON.stringify(
+          errorMessage,
+          null,
+          2,
+        )}`,
+      );
 
     res.status(status).json({
       statusCode: status,
