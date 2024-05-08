@@ -31,8 +31,12 @@ export class LoggingInterceptor implements NestInterceptor {
     return next
       .handle()
       .pipe(
-        tap(() =>
-          this.logger.info(`\nip: ${ip}\npath: ${path}\n${Date.now() - now}ms`),
+        tap(
+          () =>
+            this.config.get<string>('NODE_ENV') !== 'test' &&
+            this.logger.info(
+              `\nip: ${ip}\npath: ${path}\n${Date.now() - now}ms`,
+            ),
         ),
       );
   }

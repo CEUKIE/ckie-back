@@ -9,7 +9,7 @@ services:
     restart: always
     shm_size: 128mb
     ports:
-      - 5431:5432
+      - 5430:5432
     volumes:
       - ckieDev:/var/lib/postgresql/data
     environment:
