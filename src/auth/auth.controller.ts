@@ -1,6 +1,5 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Controller, Get, HttpCode, Query } from '@nestjs/common';
 
-import { KakaoLoginDto } from './dto/kakao-login-dto';
 import { KakaoClient } from './oauth/kakao.client';
 import { LoginResponse } from './dto/login-response';
 import { ResponseForm } from '../common/format/response-form';
@@ -12,22 +11,14 @@ export class AuthController {
   /**
    * @tag auth
    * @summary 카카오 로그인
-   * @param dto 회원 정보
    * @returns access token
    */
-  // TODO generate 오버로딩 함수 정의 후 endpoint 수정.
   @HttpCode(200)
-  @Post('kakao')
+  @Get('kakao')
   async kakaoLogin(
-    @Body() dto: KakaoLoginDto,
+    @Query('code') code: string,
   ): Promise<ResponseForm<LoginResponse>> {
-    const token: LoginResponse = await this.kakaoService.login(dto);
+    const token: LoginResponse = await this.kakaoService.login(code);
     return ResponseForm.ok(token);
   }
-
-  // 테스트 (삭제 예정)
-  // @Get('kakao')
-  // kakaoLogin(@Query('code') code: string) {
-  //   return this.kakaoService.login(code);
-  // }
 }
