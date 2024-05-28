@@ -2,38 +2,52 @@ import { Injectable } from '@nestjs/common';
 
 import { Kakao, Platform } from '../types';
 import { UsersService } from '../../providers/users.service';
-import { OAuthClient } from './oauth.client';
 import axios from 'axios';
+import { LoginDto } from '../dto/login-dto';
 
 @Injectable()
-export class KakaoClient extends OAuthClient {
+export class KakaoClient {
   private readonly USER_DATA_URL = process.env.KAKAO_USER_DATA_URL ?? '';
   private readonly platform: Platform = 'KAKAO';
 
-  constructor(private readonly usersService: UsersService) {
-    super();
+  constructor(private readonly usersService: UsersService) {}
+
+  async login(
+    token: string,
+  ): Promise<{ accessToken: string } | { isRegisterd: boolean }> {
+    const { user } = await this.checkSignupStatus(token);
+
+    return !!user
+      ? await this.usersService.login({ id: user.id, platform: user.platform })
+      : { isRegisterd: false };
   }
 
-  async login(code: string) {
-    const userData = await this.getUserData(code);
-    const identifier = String(userData.id);
+  async signup(dto: LoginDto) {
+    const { identifier } = await this.checkSignupStatus(dto.accessToken);
 
-    let user = await this.usersService.getUserByIdentifier(
+    const user = await this.usersService.signup({
+      identifier,
+      nickname: dto.nickname,
+      avatarUrl: dto.avatarUrl,
+      introduction: dto.introduction,
+      platform: this.platform,
+    });
+
+    return await this.usersService.login({
+      id: user.id,
+      platform: user.platform,
+    });
+  }
+
+  async checkSignupStatus(token: string) {
+    const userData = await this.getUserData(token);
+    const identifier = String(userData.id);
+    const user = await this.usersService.getUserByIdentifierAndPlatform(
       identifier,
       this.platform,
     );
 
-    if (!user) {
-      user = await this.usersService.register({
-        identifier,
-        // TODO 랜덤 문자열 OR 클라이언트에서 입력
-        nickname: 'test',
-        introduction: '',
-        platform: this.platform,
-      });
-    }
-
-    return this.usersService.login({ id: user.id, platform: user.platform });
+    return { user, identifier };
   }
 
   protected async getUserData(token: string) {

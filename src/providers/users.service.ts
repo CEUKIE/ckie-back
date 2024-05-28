@@ -16,7 +16,7 @@ export class UsersService {
     return await this.authService.generateAccessToken(data);
   }
 
-  async register(
+  async signup(
     data: UserTypes.CreateUserData,
   ): Promise<UserTypes.CreateReturnData> {
     return await this.usersRepository.create(data);
@@ -26,9 +26,13 @@ export class UsersService {
     identifier: string,
     platform: Platform,
   ): Promise<UserTypes.UserForLogin | null> {
-    return this.usersRepository.findOneByIdentifierAndPlatform(
+    return await this.usersRepository.findOneByIdentifierAndPlatform(
       identifier,
       platform,
     );
+  }
+
+  async getUserById(id: string): Promise<UserTypes.UserDetail | null> {
+    return await this.usersRepository.findOneById(id);
   }
 }

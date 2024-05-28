@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
     const token = authorization.split(' ')[1];
 
     // token decode한 값.
-    req['user'] = this.authService.verifyAccessToken(token);
+    req['user'] = await this.authService.verifyAccessToken(token);
     return true;
   }
 }
