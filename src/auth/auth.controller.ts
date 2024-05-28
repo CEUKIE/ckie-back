@@ -16,6 +16,7 @@ export class AuthController {
   @HttpCode(200)
   @Get('kakao')
   async kakaoLogin(
+    // TODO 문자열 검증
     @Query('code') code: string,
   ): Promise<ResponseForm<LoginResponse>> {
     const token: LoginResponse = await this.kakaoService.login(code);
