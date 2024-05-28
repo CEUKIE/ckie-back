@@ -4,7 +4,6 @@ import {
   Get,
   HttpCode,
   Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 
@@ -15,8 +14,9 @@ import { UserInfo } from '../common/decorators/user.decorator';
 import { TokenData } from './types';
 import { UsersService } from '../providers/users.service';
 import { AuthGuard } from '../common/guards/auth.guard';
-import { LoginDto } from './dto/login-dto';
+import { SignupDto } from './dto/signup-dto';
 import { SignupResponse } from './dto/signup-response';
+import { LoginDto } from './dto/login-dto';
 
 @Controller('auth')
 export class AuthController {
@@ -31,12 +31,14 @@ export class AuthController {
    * @returns 가입자: 크키 access token, 미가입자: isRegisterd: false
    */
   @HttpCode(200)
-  @Post('kakao-check')
+  @Post('kakao-login')
   async kakaoLogin(
     // TODO 문자열 검증
-    @Query('token') token: string,
+    @Body() dto: LoginDto,
   ): Promise<ResponseForm<LoginResponse>> {
-    const response: LoginResponse = await this.kakaoService.login(token);
+    const response: LoginResponse = await this.kakaoService.login(
+      dto.accessToken,
+    );
     return ResponseForm.ok(response);
   }
 
@@ -49,7 +51,7 @@ export class AuthController {
   @Post('kakao-signup')
   async kakaoSignup(
     // TODO 문자열 검증
-    @Body() dto: LoginDto,
+    @Body() dto: SignupDto,
   ): Promise<ResponseForm<SignupResponse>> {
     const response: SignupResponse = await this.kakaoService.signup(dto);
     return ResponseForm.ok(response);

@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { Kakao, Platform } from '../types';
 import { UsersService } from '../../providers/users.service';
 import axios from 'axios';
-import { LoginDto } from '../dto/login-dto';
+import { SignupDto } from '../dto/signup-dto';
 
 @Injectable()
 export class KakaoClient {
@@ -22,7 +22,7 @@ export class KakaoClient {
       : { isRegisterd: false };
   }
 
-  async signup(dto: LoginDto) {
+  async signup(dto: SignupDto) {
     const { identifier } = await this.checkSignupStatus(dto.accessToken);
 
     const user = await this.usersService.signup({
