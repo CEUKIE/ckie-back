@@ -1,33 +1,73 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 
-import { KakaoLoginDto } from './dto/kakao-login-dto';
 import { KakaoClient } from './oauth/kakao.client';
 import { LoginResponse } from './dto/login-response';
 import { ResponseForm } from '../common/format/response-form';
+import { UserInfo } from '../common/decorators/user.decorator';
+import { TokenData } from './types';
+import { UsersService } from '../providers/users.service';
+import { AuthGuard } from '../common/guards/auth.guard';
+import { SignupDto } from './dto/signup-dto';
+import { SignupResponse } from './dto/signup-response';
+import { LoginDto } from './dto/login-dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly kakaoService: KakaoClient) {}
+  constructor(
+    private readonly kakaoService: KakaoClient,
+    private readonly usersService: UsersService,
+  ) {}
 
   /**
    * @tag auth
-   * @summary 카카오 로그인
-   * @param dto 회원 정보
-   * @returns access token
+   * @param token 카카오 access token
+   * @returns 가입자: 크키 access token, 미가입자: isRegisterd: false
    */
-  // TODO generate 오버로딩 함수 정의 후 endpoint 수정.
   @HttpCode(200)
-  @Post('kakao')
+  @Post('kakao-login')
   async kakaoLogin(
-    @Body() dto: KakaoLoginDto,
+    // TODO 문자열 검증
+    @Body() dto: LoginDto,
   ): Promise<ResponseForm<LoginResponse>> {
-    const token: LoginResponse = await this.kakaoService.login(dto);
-    return ResponseForm.ok(token);
+    const response: LoginResponse = await this.kakaoService.login(
+      dto.accessToken,
+    );
+    return ResponseForm.ok(response);
   }
 
-  // 테스트 (삭제 예정)
-  // @Get('kakao')
-  // kakaoLogin(@Query('code') code: string) {
-  //   return this.kakaoService.login(code);
-  // }
+  /**
+   * @tag auth
+   * @param dto 회원 가입 데이터
+   * @returns 크키 access token
+   */
+  @HttpCode(200)
+  @Post('kakao-signup')
+  async kakaoSignup(
+    // TODO 문자열 검증
+    @Body() dto: SignupDto,
+  ): Promise<ResponseForm<SignupResponse>> {
+    const response: SignupResponse = await this.kakaoService.signup(dto);
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag auth
+   * @security bearer
+   * @returns access token 유효 여부
+   */
+  @UseGuards(AuthGuard)
+  @Get('verify')
+  async varifyAccessToken(
+    @UserInfo() user: TokenData,
+  ): Promise<ResponseForm<{ isVerified: boolean }>> {
+    const userExists = await this.usersService.getUserById(user.id);
+    return ResponseForm.ok({ isVerified: !!userExists });
+  }
 }

@@ -2,11 +2,11 @@ import { HttpStatus } from '@nestjs/common';
 
 export class ResponseForm<T> {
   readonly statusCode: HttpStatus;
-  readonly data?: T;
+  readonly result?: T;
 
-  private constructor(statusCode: HttpStatus, data?: T) {
+  private constructor(statusCode: HttpStatus, result?: T) {
     this.statusCode = statusCode;
-    this.data = data;
+    this.result = result;
   }
 
   static ok<T>(data?: T) {

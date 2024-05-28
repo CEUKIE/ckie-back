@@ -35,7 +35,7 @@ model User {
   nickname String @db.Char(15) @unique
   avatarUrl String? @map("avatar_url") // TODO default 이미지
   platform Platform
-  introduction String
+  introduction String?
   deleted DateTime?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

@@ -9,7 +9,7 @@ export namespace UserTypes {
   export interface CreateUserData {
     nickname: string;
     avatarUrl?: string;
-    introduction: string;
+    introduction?: string;
     platform: Platform;
     identifier: string;
   }
@@ -21,7 +21,7 @@ export namespace UserTypes {
     nickname: string;
     avatarUrl?: string | null;
     platform: Platform;
-    introduction: string;
+    introduction?: string | null;
   }
 }
 
