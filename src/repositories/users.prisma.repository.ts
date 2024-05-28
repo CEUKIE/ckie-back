@@ -17,7 +17,7 @@ export class UsersPrismaRepository implements UsersRepository {
       .then((v) => ({ id: v.id, platform: v.platform }));
   }
 
-  async findOneByIdentifier(
+  async findOneByIdentifierAndPlatform(
     identifier: string,
     platform: Platform,
   ): Promise<UserTypes.UserForLogin | null> {

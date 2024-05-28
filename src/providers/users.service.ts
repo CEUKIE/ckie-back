@@ -22,10 +22,13 @@ export class UsersService {
     return await this.usersRepository.create(data);
   }
 
-  async getUserByIdentifier(
+  async getUserByIdentifierAndPlatform(
     identifier: string,
     platform: Platform,
   ): Promise<UserTypes.UserForLogin | null> {
-    return this.usersRepository.findOneByIdentifier(identifier, platform);
+    return this.usersRepository.findOneByIdentifierAndPlatform(
+      identifier,
+      platform,
+    );
   }
 }

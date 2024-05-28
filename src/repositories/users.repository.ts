@@ -3,7 +3,7 @@ import { UserTypes } from '../types';
 
 export interface UsersRepository {
   create(data: UserTypes.CreateUserData): Promise<UserTypes.CreateReturnData>;
-  findOneByIdentifier(
+  findOneByIdentifierAndPlatform(
     identifier: string,
     platform: Platform,
   ): Promise<UserTypes.UserForLogin | null>;
