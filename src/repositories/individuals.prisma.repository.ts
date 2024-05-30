@@ -29,9 +29,17 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       select: {
         id: true,
         name: true,
+        avatarUrl: true,
         gender: true,
         hatchedAt: true,
         memo: true,
+        species: true,
+        cage: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
       where: { userId, deleted: null },
     });

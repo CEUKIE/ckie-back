@@ -35,9 +35,12 @@ export namespace IndividualTypes {
   export interface Individual {
     id: string;
     name: string;
+    avatarUrl: string;
     gender: Gender;
     hatchedAt: Date;
     memo?: string | null;
+    species: Pick<SpeciesTypes.Species, 'id' | 'name'>;
+    cage: CageTypes.Cage | null;
   }
 
   export interface IndividualDetail {
@@ -94,7 +97,7 @@ export namespace CageTypes {
   export interface Cage extends Omit<CreateCageData, 'userId'> {}
 
   export interface CageDetail extends Cage {
-    individuals: IndividualTypes.Individual[];
+    individuals: Omit<IndividualTypes.Individual, 'cage'>[];
     cageStates: CageStateTypes.CageState[];
   }
 }

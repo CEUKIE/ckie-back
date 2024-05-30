@@ -39,8 +39,10 @@ export class CagesPrismaRepository implements CagesRepository {
             id: true,
             name: true,
             gender: true,
+            avatarUrl: true,
             hatchedAt: true,
             memo: true,
+            species: true,
           },
         },
         cageStates: {
