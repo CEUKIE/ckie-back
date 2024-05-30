@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient({
-  datasourceUrl: 'postgresql://ckie:pass@localhost:5431/ckie?schema=public',
+  datasourceUrl: 'postgresql://ckie:pass@localhost:5430/ckie?schema=public',
 });
 
 async function main() {
@@ -18,14 +18,15 @@ async function main() {
   });
 
   const species = await prisma.species.upsert({
-    where: { name: '달팽이' },
+    where: { id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b0f' },
     update: {},
     create: {
-      name: '달팽이',
-      minTemperature: 1.2,
-      maxTemperature: 30.5,
-      minHumidity: 20.2,
-      maxHumidity: 60.7,
+      id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b0f',
+      minTemperature: 24,
+      maxTemperature: 28,
+      minHumidity: 50,
+      maxHumidity: 70,
+      name: '크레스티드 게코',
     },
   });
 
@@ -35,6 +36,7 @@ async function main() {
     create: {
       id: '919b83a4-fdc9-4d8e-804e-fce7199c118a',
       name: '퍙이',
+      avatarUrl: 'https://image.ckie.store/images/individual-profile.jpeg',
       weight: 3.2,
       weightUnit: 'G',
       memo: '응가쟁이임',
@@ -51,6 +53,7 @@ async function main() {
     create: {
       id: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b2f',
       name: '퐁이',
+      avatarUrl: 'https://image.ckie.store/images/individual-profile.jpeg',
       weight: 3.2,
       weightUnit: 'G',
       memo: '응가쟁이임',
@@ -67,6 +70,7 @@ async function main() {
     create: {
       id: '8114792a-f375-496c-9e7a-dcf72837fdfd',
       name: '풍이',
+      avatarUrl: 'https://image.ckie.store/images/individual-profile.jpeg',
       weight: 56.2,
       weightUnit: 'G',
       memo: '똥쟁이임',
@@ -77,7 +81,46 @@ async function main() {
     },
   });
 
-  console.log([user, species, individual1, individual2, individual3]);
+  const cage1 = await prisma.cage.upsert({
+    where: { id: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f' },
+    update: {},
+    create: {
+      id: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
+      name: '코따리 사육장',
+      userId: '2904c0e9-9f6c-4971-937e-5ca16f66510b',
+    },
+  });
+
+  const cage2 = await prisma.cage.upsert({
+    where: { id: 'c6bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f' },
+    update: {},
+    create: {
+      id: 'c6bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
+      name: '달팽이 사육장',
+      userId: '2904c0e9-9f6c-4971-937e-5ca16f66510b',
+    },
+  });
+
+  const cage3 = await prisma.cage.upsert({
+    where: { id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f' },
+    update: {},
+    create: {
+      id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
+      name: '스네일 사육장',
+      userId: '2904c0e9-9f6c-4971-937e-5ca16f66510b',
+    },
+  });
+
+  console.log([
+    user,
+    species,
+    individual1,
+    individual2,
+    individual3,
+    cage1,
+    cage2,
+    cage3,
+  ]);
 }
 main()
   .then(async () => {
