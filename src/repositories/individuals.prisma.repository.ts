@@ -15,6 +15,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       .then((v) => ({
         id: v.id,
         name: v.name,
+        avatarUrl: v.avatarUrl,
         gender: v.gender,
         hatchedAt: v.hatchedAt,
         memo: v.memo,
@@ -43,6 +44,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       select: {
         id: true,
         name: true,
+        avatarUrl: true,
         gender: true,
         hatchedAt: true,
         memo: true,
@@ -64,6 +66,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
       select: {
         id: true,
         name: true,
+        avatarUrl: true,
         gender: true,
         hatchedAt: true,
         memo: true,

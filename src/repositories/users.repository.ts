@@ -8,6 +8,7 @@ export interface UsersRepository {
     platform: Platform,
   ): Promise<UserTypes.UserForLogin | null>;
   findOneById(id: string): Promise<UserTypes.UserDetail | null>;
+  update(id: string, data: UserTypes.UpdateUserData): Promise<void>;
 }
 
 export const UsersRepository = Symbol('UsersRepository');

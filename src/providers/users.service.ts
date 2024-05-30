@@ -4,6 +4,7 @@ import { UserTypes } from '../types';
 import { UsersRepository } from '../repositories/users.repository';
 import { Platform, TokenData } from '../auth/types';
 import { AuthService } from '../auth/auth.service';
+import { UpdateUserInfoDto } from '../dto/users/update-user-info.dto';
 
 @Injectable()
 export class UsersService {
@@ -34,5 +35,14 @@ export class UsersService {
 
   async getUserById(id: string): Promise<UserTypes.UserDetail | null> {
     return await this.usersRepository.findOneById(id);
+  }
+
+  async update(id: string, dto: UpdateUserInfoDto) {
+    try {
+      await this.usersRepository.update(id, dto);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

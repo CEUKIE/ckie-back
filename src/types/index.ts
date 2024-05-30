@@ -14,6 +14,9 @@ export namespace UserTypes {
     identifier: string;
   }
 
+  export interface UpdateUserData
+    extends Omit<CreateUserData, 'platform' | 'identifier'> {}
+
   export type CreateReturnData = UserForLogin;
 
   export interface UserDetail {
@@ -26,7 +29,7 @@ export namespace UserTypes {
 }
 
 export namespace IndividualTypes {
-  export type Gender = 'MALE' | 'FEMALE';
+  export type Gender = 'MALE' | 'FEMALE' | 'LESS';
   export type WeightUnit = 'G' | 'KG';
 
   export interface Individual {
@@ -40,6 +43,7 @@ export namespace IndividualTypes {
   export interface IndividualDetail {
     id: string;
     name: string;
+    avatarUrl: string;
     gender: Gender;
     hatchedAt: Date;
     memo?: string | null;
@@ -49,6 +53,7 @@ export namespace IndividualTypes {
 
   export interface CreateIndividualData {
     name: string;
+    avatarUrl: string;
     weight: number;
     weightUnit: IndividualTypes.WeightUnit;
     gender: IndividualTypes.Gender;

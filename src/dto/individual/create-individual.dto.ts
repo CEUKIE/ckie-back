@@ -18,6 +18,9 @@ export class CreateIndividualDto {
   @Length(2, 10)
   readonly name: string;
 
+  @IsString()
+  readonly avatarUrl: string;
+
   @IsNumber({
     allowInfinity: false,
     allowNaN: false,
@@ -45,6 +48,7 @@ export class CreateIndividualDto {
 
   constructor(
     name: string,
+    avatarUrl: string,
     weight: number,
     weightUnit: IndividualTypes.WeightUnit,
     gender: IndividualTypes.Gender,
@@ -53,6 +57,7 @@ export class CreateIndividualDto {
     memo?: string,
   ) {
     this.name = name;
+    this.avatarUrl = avatarUrl;
     this.weight = weight;
     this.weightUnit = weightUnit;
     this.gender = gender;
