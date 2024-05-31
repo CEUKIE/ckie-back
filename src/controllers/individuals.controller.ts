@@ -70,7 +70,7 @@ export class IndividualsController {
    * @returns 수정된 개체 정보
    */
   @Patch(':id')
-  async modify(@Param('id') id: string, dto: UpdateIndividualDto) {
+  async modify(@Param('id') id: string, @Body() dto: UpdateIndividualDto) {
     const response = await this.individualsService.update(id, dto);
     return ResponseForm.ok(response);
   }
