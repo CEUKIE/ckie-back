@@ -49,7 +49,7 @@ model User {
 
 model Individual {
   id String @id @default(uuid())
-  name String @db.Char(15)
+  name String @db.VarChar(15)
   avatarUrl String @map("avatar_url") // TODO default 이미지
   weight Float
   weightUnit WeightUnit @map("weight_unit")
