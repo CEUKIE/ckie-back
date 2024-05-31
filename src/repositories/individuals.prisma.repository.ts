@@ -42,6 +42,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
         },
       },
       where: { userId, deleted: null },
+      orderBy: { createdAt: 'asc' },
     });
   }
 
