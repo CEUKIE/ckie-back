@@ -39,6 +39,9 @@ export class CreateIndividualDto {
   readonly hatchedAt: Date;
 
   @IsUUID()
+  readonly cageId: string;
+
+  @IsUUID()
   readonly speciesId: string;
 
   @IsOptional()
@@ -53,6 +56,7 @@ export class CreateIndividualDto {
     weightUnit: IndividualTypes.WeightUnit,
     gender: IndividualTypes.Gender,
     hatchedAt: Date,
+    cageId: string,
     speciesId: string,
     memo?: string,
   ) {
@@ -62,6 +66,7 @@ export class CreateIndividualDto {
     this.weightUnit = weightUnit;
     this.gender = gender;
     this.hatchedAt = hatchedAt;
+    this.cageId = cageId;
     this.speciesId = speciesId;
     this.memo = memo;
   }
