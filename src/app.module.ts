@@ -18,6 +18,7 @@ import { IndividualsModule } from './modules/individuals.module';
 import { SpeciesModule } from './modules/species.module';
 import { CagesModule } from './modules/cages.module';
 import { FilesModule } from './modules/files.module';
+import { CageStatesModule } from './modules/cage-states.module';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { FilesModule } from './modules/files.module';
     IndividualsModule,
     SpeciesModule,
     CagesModule,
+    CageStatesModule,
     FilesModule,
   ],
   controllers: [AppController],

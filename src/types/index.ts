@@ -103,6 +103,12 @@ export namespace CageTypes {
 }
 
 export namespace CageStateTypes {
+  export interface CreateCageStatesData {
+    cageId: string;
+    temperature: number;
+    humidity: number;
+  }
+
   export interface CageState {
     temperature: number;
     humidity: number;
