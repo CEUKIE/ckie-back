@@ -58,6 +58,6 @@ jobs:
         script: |
           sudo docker stop ckie-server
           sudo docker rm ckie-server
-          sudo docker rmi ckie-server
-          sudo docker pull ckie-server
-          sudo docker run --name ckie-server -d -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p ${{ secrets.DOCKER_PORT }} ckie-server
+          sudo docker rmi koh1260/ckie-server
+          sudo docker pull koh1260/ckie-server
+          sudo docker run --name ckie-server -d -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p ${{ secrets.DOCKER_PORT }} koh1260/ckie-server
