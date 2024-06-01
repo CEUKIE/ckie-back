@@ -19,6 +19,12 @@ jobs:
     - name: Append Environment Variables File
       run: |
         ls
+        cd ./src
+        ls
+        cd ./configs
+        ls
+        cd ./env
+        ls
         echo "${{ secrets.ENV_FILE }}" > ./src/configs/env/env.production
       # echo "${{ secrets.TEST_ENV_FILE }}" > ./src/config/env/.test.env
       
