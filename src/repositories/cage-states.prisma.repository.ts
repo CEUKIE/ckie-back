@@ -1,7 +1,9 @@
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CageStateTypes } from '../types';
 import { CageStatesRepository } from './cage-states.repository';
 
+@Injectable()
 export class CageStatesPrismaRepository implements CageStatesRepository {
   constructor(private readonly prisma: PrismaService) {}
 
