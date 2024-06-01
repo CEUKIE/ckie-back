@@ -18,8 +18,15 @@ jobs:
 
     - name: Append Environment Variables File
       run: |
-        echo "${{ secrets.ENV_FILE }}" > ./src/config/env/.production.env
-        echo "${{ secrets.TEST_ENV_FILE }}" > ./src/config/env/.test.env
+        ls
+        cd ./src
+        ls
+        cd ./configs
+        ls
+        cd ./env
+        ls
+        echo "${{ secrets.ENV_FILE }}" > ./src/configs/env/env.production
+      # echo "${{ secrets.TEST_ENV_FILE }}" > ./src/config/env/.test.env
       
     - name: Use Node.js 18.x
       uses: actions/setup-node@v3
