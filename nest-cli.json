@@ -16,6 +16,10 @@
       {
         "include": "../prisma/schema.prisma",
         "outDir": "./dist/prisma"
+      },
+      {
+        "include": "../tsconfig.json",
+        "outDir": "./dist"
       }
     ]
   }
