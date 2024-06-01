@@ -10,7 +10,8 @@ export class CageStatesController {
   /**
    * @tag caga-states
    * @summary 사육장 상태 생성
-   * @param dto 사육장 상태 생성 데이터
+   * @param dto temperature, humidity: 소수점 1자리까지 허용,   영상 온도만 가능.
+   *  cageId: UUID
    * @returns 생성된 사육장 상태
    */
   @Post()
