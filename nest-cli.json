@@ -12,6 +12,10 @@
       {
         "include": "./configs/swagger/swagger.json",
         "outDir": "./dist/src"
+      },
+      {
+        "include": "../prisma/schema.prisma",
+        "outDir": "./dist/prisma"
       }
     ]
   }
