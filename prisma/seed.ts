@@ -87,7 +87,7 @@ async function main() {
     create: {
       id: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
       name: '코따리 사육장',
-      userId: '2904c0e9-9f6c-4971-937e-5ca16f66510b',
+      userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
     },
   });
 
@@ -97,7 +97,7 @@ async function main() {
     create: {
       id: 'c6bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
       name: '달팽이 사육장',
-      userId: '2904c0e9-9f6c-4971-937e-5ca16f66510b',
+      userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
     },
   });
 
@@ -107,7 +107,7 @@ async function main() {
     create: {
       id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
       name: '스네일 사육장',
-      userId: '2904c0e9-9f6c-4971-937e-5ca16f66510b',
+      userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
     },
   });
 
