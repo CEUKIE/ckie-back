@@ -50,4 +50,43 @@ export class CageConnectionGateway
     this.logger.info('message!~');
     this.server?.emit('message', data);
   }
+
+  @SubscribeMessage('connect-cage')
+  handleConnectCage(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: { cageId: string },
+  ) {
+    if (client.rooms.has(data.cageId)) return;
+
+    client.join(data.cageId);
+    client.to(data.cageId).emit('connect-cage', data);
+    this.logger.info(`${client.id} is connected to ${data.cageId}`);
+  }
+
+  @SubscribeMessage('request-temp-humidity')
+  handleRequestTemperature(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: { cageId: string },
+  ) {
+    this.logger.info(`request temperature to ${data.cageId}`);
+    client.to(data.cageId).emit('request-temp-humidity');
+  }
+
+  @SubscribeMessage('response-temp-humidity')
+  handleResponseTemperature(
+    @ConnectedSocket() client: Socket,
+    @MessageBody()
+    data: { cageId: string; temperature: number; humidity: number },
+  ) {
+    this.logger.info(
+      `\nclientId: ${client.id},\nroomId: ${
+        data.cageId
+      },\nbody: ${JSON.stringify(data, null, 2)}`,
+    );
+
+    client.to(data.cageId).emit('response-temp-humidity', {
+      temperature: data.temperature,
+      humidity: data.humidity,
+    });
+  }
 }
