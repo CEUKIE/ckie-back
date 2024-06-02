@@ -116,6 +116,24 @@ export namespace CageStateTypes {
   }
 }
 
+export namespace RecordTypes {
+  export type RecordCategory = 'FEEDING' | 'WEIGHT' | 'ECDYSIS' | 'ETC';
+
+  export interface CreateRecordData {
+    individualId: string;
+    targetDate: Date;
+    memo?: string | null;
+    category: RecordCategory;
+  }
+
+  export interface Record {
+    id: string;
+    targetDate: Date;
+    memo?: string | null;
+    category: RecordCategory;
+  }
+}
+
 export interface ImageResponse {
   filePath: string;
 }
