@@ -121,13 +121,11 @@ export namespace RecordTypes {
 
   export interface RecordsResponse {
     target: string;
-    record: [
-      {
-        id: string;
-        name: RecordCategory;
-        memo?: string | null;
-      },
-    ];
+    record: {
+      id: string;
+      name: RecordCategory;
+      memo?: string | null;
+    }[];
   }
 
   export interface CreateRecordData {

@@ -41,33 +41,22 @@ export class RecordsService {
   transformRecordData(
     original: RecordTypes.Record[],
   ): RecordTypes.RecordsResponse[] {
-    const transformedData: RecordTypes.RecordsResponse[] = [];
+    const groupData: { [key: string]: RecordTypes.RecordsResponse } = {};
 
     original.forEach((item) => {
-      let exist = false;
       const target = this.foramtDate(item.targetDate);
-
-      transformedData.forEach((newItem) => {
-        if (newItem['target'] === target) {
-          newItem.record.push({
-            id: item.id,
-            name: item.category,
-            memo: item.memo,
-          });
-          exist = true;
-        }
-      });
-
-      if (!exist) {
-        transformedData.push({
-          target: target,
-          record: [{ id: item.id, name: item.category, memo: item.memo }],
-        });
-        exist = false;
+      if (!groupData[target]) {
+        groupData[target] = { target, record: [] };
       }
+
+      groupData[target].record.push({
+        id: item.id,
+        name: item.category,
+        memo: item.memo,
+      });
     });
 
-    return transformedData;
+    return Object.values(groupData);
   }
 
   foramtDate(date: Date) {
