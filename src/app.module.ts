@@ -19,6 +19,7 @@ import { SpeciesModule } from './modules/species.module';
 import { CagesModule } from './modules/cages.module';
 import { FilesModule } from './modules/files.module';
 import { CageStatesModule } from './modules/cage-states.module';
+import { CageConnectionModule } from './socket/cage-connection.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { CageStatesModule } from './modules/cage-states.module';
     CagesModule,
     CageStatesModule,
     FilesModule,
+    CageConnectionModule,
   ],
   controllers: [AppController],
   providers: [AppService],
