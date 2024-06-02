@@ -14,4 +14,19 @@ export class RecordsPrismaRepository implements RecordsRepository {
       data,
     });
   }
+
+  async findAllByIndividualId(
+    individualId: string,
+  ): Promise<RecordTypes.Record[]> {
+    return await this.prisma.record.findMany({
+      select: {
+        id: true,
+        targetDate: true,
+        memo: true,
+        category: true,
+      },
+      where: { individualId },
+      orderBy: { targetDate: 'asc' },
+    });
+  }
 }

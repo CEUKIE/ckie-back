@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateRecordsDto } from '../dto/records/create-records-dto';
 import { RecordsService } from '../providers/records.service';
 import { ResponseForm } from '../common/format/response-form';
@@ -17,5 +17,19 @@ export class RecordsController {
   async create(@Body() dto: CreateRecordsDto) {
     const respose = await this.recordsService.create(dto);
     return ResponseForm.ok(respose);
+  }
+
+  /**
+   * @tag records
+   * @summary 기록 전체 조회
+   * @param individualId 개체 번호
+   * @returns 기록 데이터
+   */
+  @Get(':id')
+  async getAll(@Param('id') individualId: string) {
+    const response = await this.recordsService.findAllByIndividualId(
+      individualId,
+    );
+    return ResponseForm.ok(response);
   }
 }
