@@ -1,55 +1,56 @@
-# # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-# name: Node.js CI
+name: Node.js CI
 
-# on:
-#   push:
-#     branches: 
-#       - main
+on:
+  push:
+    branches: 
+      - main
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout
-#       uses: actions/checkout@v4.1.1
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
 
-#     - name: Append Environment Variables File
-#       run: |
-#         echo "${{ secrets.ENV_FILE }}" > ./src/configs/env/.env.production
+    - name: Append Environment Variables File
+      run: |
+        echo "${{ secrets.ENV_FILE }}" > ./src/configs/env/.env.production
       
-#     - name: Use Node.js 18.x
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: 18
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
     
-#     - name: Docker Login
-#       uses: docker/login-action@v3.0.0
-#       with:
-#         username: ${{ secrets.DOCKER_HUB_USERNAME }}
-#         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Docker Login
+      uses: docker/login-action@v3.0.0
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
                  
-#     - name: Build and push Docker images
-#       uses: docker/build-push-action@v5.1.0
-#       with:
-#         context: .
-#         file: dockerfile
-#         platforms: linux/amd64
-#         build-args: DATABASE_URL:${{ secrets.DATABASE_URL }}
-#         push: true
-#         tags: koh1260/ckie-server
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v5.1.0
+      with:
+        context: .
+        file: dockerfile
+        platforms: linux/amd64
+        build-args: DATABASE_URL:${{ secrets.DATABASE_URL }}
+        push: true
+        tags: koh1260/ckie-server
         
-#     - name: SSH Remote Commands
-#       uses: appleboy/ssh-action@v1.0.1
-#       with:
-#         host: ${{ secrets.SSH_HOST }}
-#         username: ${{ secrets.SSH_USERNAME }}
-#         key: ${{ secrets.SSH_KEY }}
-#         script: |
-#           sudo docker stop ckie-server
-#           sudo docker rm ckie-server
-#           sudo docker rmi koh1260/ckie-server
-#           sudo docker pull koh1260/ckie-server
-#           sudo docker run --name ckie-server -d -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p ${{ secrets.DOCKER_PORT }} koh1260/ckie-server
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v1.0.1
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          sudo docker login
+          sudo docker stop ckie-server
+          sudo docker rm ckie-server
+          sudo docker rmi koh1260/ckie-server
+          sudo docker pull koh1260/ckie-server
+          sudo docker run --name ckie-server -d -e DATABASE_URL=${{ secrets.DATABASE_URL }} -p ${{ secrets.DOCKER_PORT }} koh1260/ckie-server
