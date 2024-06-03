@@ -141,6 +141,12 @@ export namespace RecordTypes {
     memo?: string | null;
     category: RecordCategory;
   }
+
+  export interface WeightRecord {
+    id: string;
+    targetDate: Date;
+    weight?: number | null;
+  }
 }
 
 export interface ImageResponse {

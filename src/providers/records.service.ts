@@ -31,6 +31,11 @@ export class RecordsService {
     return this.transformRecordData(original);
   }
 
+  async findWeightsByIndividualId(individualId: string) {
+    await this.findIndividualByIdOrThrow(individualId);
+    return await this.recordsRepository.findWeightsByIndividualId(individualId);
+  }
+
   async findIndividualByIdOrThrow(id: string) {
     const individual = await this.individualsRepository.findOneById(id);
     if (!individual) throw new BadRequestException('존재하지 않는 개체.');

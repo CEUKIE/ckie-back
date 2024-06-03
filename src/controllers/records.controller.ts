@@ -32,4 +32,17 @@ export class RecordsController {
     );
     return ResponseForm.ok(response);
   }
+
+  /**
+   * @tag records
+   * @param individualId 개체 번호
+   * @returns 무게 기록 데이터
+   */
+  @Get(':id/weights')
+  async getWeights(@Param('id') individualId: string) {
+    const response = await this.recordsService.findWeightsByIndividualId(
+      individualId,
+    );
+    return ResponseForm.ok(response);
+  }
 }

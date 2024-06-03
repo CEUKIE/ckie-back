@@ -111,6 +111,66 @@ async function main() {
     },
   });
 
+  const record1 = await prisma.record.upsert({
+    where: { id: '919b83a4-fdc9-4d8e-804e-fce7199c118n' },
+    update: {},
+    create: {
+      id: '919b83a4-fdc9-4d8e-804e-fce7199c118n',
+      category: 'FEEDING',
+      targetDate: new Date('2024-05-23'),
+      individualId: '919b83a4-fdc9-4d8e-804e-fce7199c118a',
+      memo: '귀뚜라미/중',
+    },
+  });
+
+  const record2 = await prisma.record.upsert({
+    where: { id: '519b83a4-fdc9-4d8e-804e-fce7199c118n' },
+    update: {},
+    create: {
+      id: '519b83a4-fdc9-4d8e-804e-fce7199c118n',
+      category: 'WEIGHT',
+      weight: 5.2,
+      targetDate: new Date('2024-05-23'),
+      individualId: '919b83a4-fdc9-4d8e-804e-fce7199c118a',
+    },
+  });
+
+  const record3 = await prisma.record.upsert({
+    where: { id: '919b83a4-fdc9-4d8e-804e-fce7199c116n' },
+    update: {},
+    create: {
+      id: '919b83a4-fdc9-4d8e-804e-fce7199c116n',
+      category: 'WEIGHT',
+      weight: 5.8,
+      targetDate: new Date('2024-05-23'),
+      individualId: '919b83a4-fdc9-4d8e-804e-fce7199c118a',
+    },
+  });
+
+  const record4 = await prisma.record.upsert({
+    where: { id: '919b83a4-fdc9-4d8e-804e-fce7199c118h' },
+    update: {},
+    create: {
+      id: '919b83a4-fdc9-4d8e-804e-fce7199c118h',
+      category: 'WEIGHT',
+      weight: 6,
+      targetDate: new Date('2024-05-23'),
+      individualId: '919b83a4-fdc9-4d8e-804e-fce7199c118a',
+    },
+  });
+
+  const record5 = await prisma.record.upsert({
+    where: { id: '919b83a4-fdc9-4d8e-504e-fce7199c118n' },
+    update: {},
+    create: {
+      id: '919b83a4-fdc9-4d8e-504e-fce7199c118n',
+      category: 'WEIGHT',
+      weight: 7,
+      targetDate: new Date('2024-05-23'),
+      individualId: '919b83a4-fdc9-4d8e-804e-fce7199c118a',
+    },
+  });
+
   console.log([
     user,
     species,
@@ -120,6 +180,11 @@ async function main() {
     cage1,
     cage2,
     cage3,
+    record1,
+    record2,
+    record3,
+    record4,
+    record5,
   ]);
 }
 main()

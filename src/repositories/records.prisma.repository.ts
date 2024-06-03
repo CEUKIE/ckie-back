@@ -29,4 +29,20 @@ export class RecordsPrismaRepository implements RecordsRepository {
       orderBy: { targetDate: 'asc' },
     });
   }
+
+  async findWeightsByIndividualId(
+    individualId: string,
+  ): Promise<RecordTypes.WeightRecord[]> {
+    return await this.prisma.record.findMany({
+      select: {
+        id: true,
+        targetDate: true,
+        weight: true,
+      },
+      where: {
+        individualId,
+        category: 'WEIGHT',
+      },
+    });
+  }
 }
