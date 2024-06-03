@@ -132,6 +132,7 @@ export namespace RecordTypes {
     individualId: string;
     targetDate: Date;
     memo?: string | null;
+    weight?: number | null;
     category: RecordCategory;
   }
 
