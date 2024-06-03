@@ -113,6 +113,7 @@ model Record {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   memo String? 
+  weight Float?
   category RecordCategory
 
   individual Individual @relation(fields: [individualId], references: [id])
