@@ -45,4 +45,10 @@ export class RecordsPrismaRepository implements RecordsRepository {
       },
     });
   }
+
+  async delete(id: string) {
+    await this.prisma.record.delete({
+      where: { id },
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateRecordsDto } from '../dto/records/create-records-dto';
 import { RecordsService } from '../providers/records.service';
 import { ResponseForm } from '../common/format/response-form';
@@ -35,6 +35,7 @@ export class RecordsController {
 
   /**
    * @tag records
+   * @summary 무게 기록 조회
    * @param individualId 개체 번호
    * @returns 무게 기록 데이터
    */
@@ -43,6 +44,18 @@ export class RecordsController {
     const response = await this.recordsService.findWeightsByIndividualId(
       individualId,
     );
+    return ResponseForm.ok(response);
+  }
+
+  /**
+   * @tag records
+   * @summary 기록 삭제
+   * @param id 기록 번호
+   * @returns 성공: true, 실패: false
+   */
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    const response = await this.recordsService.delete(id);
     return ResponseForm.ok(response);
   }
 }

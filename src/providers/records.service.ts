@@ -43,6 +43,15 @@ export class RecordsService {
     return individual;
   }
 
+  async delete(id: string) {
+    try {
+      await this.recordsRepository.delete(id);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   transformRecordData(
     original: RecordTypes.Record[],
   ): RecordTypes.RecordsResponse[] {

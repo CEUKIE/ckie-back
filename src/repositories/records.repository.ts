@@ -6,6 +6,7 @@ export interface RecordsRepository {
   findWeightsByIndividualId(
     individualId: string,
   ): Promise<RecordTypes.WeightRecord[]>;
+  delete(id: string): Promise<void>;
 }
 
 export const RecordsRepository = Symbol('RecordsRepository');
