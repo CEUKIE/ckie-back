@@ -14,6 +14,10 @@
         "outDir": "./dist/src"
       },
       {
+        "include": "../prisma/migrations/**/*",
+        "outDir": "./dist/prisma"
+      },
+      {
         "include": "../prisma/schema.prisma",
         "outDir": "./dist/prisma"
       }
