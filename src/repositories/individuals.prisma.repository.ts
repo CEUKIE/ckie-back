@@ -59,6 +59,18 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
         memo: true,
         weight: true,
         weightUnit: true,
+        species: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        cage: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
       where: {
         id,
@@ -70,7 +82,7 @@ export class IndividualsPrismaRepository implements IndividualsRepository {
   async update(
     id: string,
     data: IndividualTypes.UpdateIndividual,
-  ): Promise<IndividualTypes.IndividualDetail> {
+  ): Promise<Omit<IndividualTypes.IndividualDetail, 'species' | 'cage'>> {
     return this.prisma.individual.update({
       select: {
         id: true,

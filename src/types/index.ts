@@ -43,13 +43,7 @@ export namespace IndividualTypes {
     cage: CageTypes.Cage | null;
   }
 
-  export interface IndividualDetail {
-    id: string;
-    name: string;
-    avatarUrl: string;
-    gender: Gender;
-    hatchedAt: Date;
-    memo?: string | null;
+  export interface IndividualDetail extends Individual {
     weight: number;
     weightUnit: WeightUnit;
   }
