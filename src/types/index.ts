@@ -43,13 +43,7 @@ export namespace IndividualTypes {
     cage: CageTypes.Cage | null;
   }
 
-  export interface IndividualDetail {
-    id: string;
-    name: string;
-    avatarUrl: string;
-    gender: Gender;
-    hatchedAt: Date;
-    memo?: string | null;
+  export interface IndividualDetail extends Individual {
     weight: number;
     weightUnit: WeightUnit;
   }
@@ -113,6 +107,40 @@ export namespace CageStateTypes {
     temperature: number;
     humidity: number;
     createdAt: Date;
+  }
+}
+
+export namespace RecordTypes {
+  export type RecordCategory = 'FEEDING' | 'WEIGHT' | 'ECDYSIS' | 'ETC';
+
+  export interface RecordsResponse {
+    target: string;
+    record: {
+      id: string;
+      name: RecordCategory;
+      memo?: string | null;
+    }[];
+  }
+
+  export interface CreateRecordData {
+    individualId: string;
+    targetDate: Date;
+    memo?: string | null;
+    weight?: number | null;
+    category: RecordCategory;
+  }
+
+  export interface Record {
+    id: string;
+    targetDate: Date;
+    memo?: string | null;
+    category: RecordCategory;
+  }
+
+  export interface WeightRecord {
+    id: string;
+    targetDate: Date;
+    weight?: number | null;
   }
 }
 

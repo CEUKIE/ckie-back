@@ -13,31 +13,36 @@ import { IndividualTypes } from '../../types';
 export class UpdateIndividualDto {
   @IsString()
   @Length(2, 10)
-  readonly name: string;
+  @IsOptional()
+  readonly name?: string;
 
   @IsString()
-  readonly avatarUrl: string;
+  @IsOptional()
+  readonly avatarUrl?: string;
 
   @Validate(IsGender)
-  readonly gender: IndividualTypes.Gender;
+  @IsOptional()
+  readonly gender?: IndividualTypes.Gender;
 
   @IsDateString()
-  readonly hatchedAt: Date;
+  @IsOptional()
+  readonly hatchedAt?: Date;
 
   @IsUUID()
-  readonly cageId: string;
-
   @IsOptional()
+  readonly cageId?: string;
+
   @IsString()
   @Length(0, 50)
+  @IsOptional()
   readonly memo?: string;
 
   constructor(
-    name: string,
-    avatarUrl: string,
-    gender: IndividualTypes.Gender,
-    hatchedAt: Date,
-    cageId: string,
+    name?: string,
+    avatarUrl?: string,
+    gender?: IndividualTypes.Gender,
+    hatchedAt?: Date,
+    cageId?: string,
     memo?: string,
   ) {
     this.name = name;
