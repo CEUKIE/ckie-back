@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, UseFilters } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -13,6 +13,11 @@ import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Server, Socket } from 'socket.io';
 import { Logger } from 'winston';
 
+import { ChangeTempDto } from './change-temp.dto';
+import { ChangeHumidityDto } from './change-humidity.dto';
+import { WsExceptionFilter } from '../common/filters/ws-exception.filter';
+
+@UseFilters(WsExceptionFilter)
 @WebSocketGateway({
   namespace: 'cage',
   cors: '*',
@@ -88,5 +93,39 @@ export class CageConnectionGateway
       temperature: data.temperature,
       humidity: data.humidity,
     });
+  }
+
+  @SubscribeMessage('change-temp')
+  handleChangeTemp(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: ChangeTempDto,
+  ) {
+    const { cageId, ...rest } = data;
+
+    this.logger.info(
+      `\nclientId: ${client.id},\nroomId: ${cageId},\nbody: ${JSON.stringify(
+        data,
+        null,
+        2,
+      )}`,
+    );
+    client.to(data.cageId).emit('change-temp', rest);
+  }
+
+  @SubscribeMessage('change-humidity')
+  handleChangeHumidity(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: ChangeHumidityDto,
+  ) {
+    const { cageId, ...rest } = data;
+
+    this.logger.info(
+      `\nclientId: ${client.id},\nroomId: ${cageId},\nbody: ${JSON.stringify(
+        data,
+        null,
+        2,
+      )}`,
+    );
+    client.to(data.cageId).emit('change-humidity', rest);
   }
 }
