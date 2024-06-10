@@ -1,4 +1,4 @@
-import { Inject, UseFilters } from '@nestjs/common';
+import { Inject, UseFilters, UseInterceptors } from '@nestjs/common';
 import {
   ConnectedSocket,
   MessageBody,
@@ -16,7 +16,10 @@ import { Logger } from 'winston';
 import { ChangeTempDto } from './change-temp.dto';
 import { ChangeHumidityDto } from './change-humidity.dto';
 import { WsExceptionFilter } from '../common/filters/ws-exception.filter';
+import { LoggingInterceptor } from '../common';
+import { WsInterceptor } from '../common/interceptors/ws.interceptor';
 
+@UseInterceptors(WsInterceptor)
 @UseFilters(WsExceptionFilter)
 @WebSocketGateway({
   cors: '*',
