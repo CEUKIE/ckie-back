@@ -5,7 +5,6 @@ export class CreateCageStatesDto {
   @IsNumber({
     allowInfinity: false,
     allowNaN: false,
-    maxDecimalPlaces: 1,
   })
   @Min(0)
   readonly temperature: number;
@@ -13,7 +12,6 @@ export class CreateCageStatesDto {
   @IsNumber({
     allowInfinity: false,
     allowNaN: false,
-    maxDecimalPlaces: 1,
   })
   @Min(0)
   readonly humidity: number;
