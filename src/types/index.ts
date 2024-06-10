@@ -81,6 +81,7 @@ export namespace CageTypes {
   export interface CreateCageData {
     id: string;
     name: string;
+    avatarUrl: string;
     userId: string;
   }
 
@@ -88,7 +89,7 @@ export namespace CageTypes {
     name: string;
   }
 
-  export interface Cage extends Omit<CreateCageData, 'userId'> {}
+  export interface Cage extends Omit<CreateCageData, 'userId' | 'avatarUrl'> {}
 
   export interface CageDetail extends Cage {
     individuals: Omit<IndividualTypes.Individual, 'cage'>[];

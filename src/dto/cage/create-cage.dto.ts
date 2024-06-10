@@ -8,8 +8,12 @@ export class CreateCageDto {
   @Length(2, 15)
   readonly name: string;
 
-  constructor(id: string, name: string) {
+  @IsString()
+  readonly avatarUrl: string;
+
+  constructor(id: string, name: string, avatarUrl: string) {
     this.id = id;
     this.name = name;
+    this.avatarUrl = avatarUrl;
   }
 }

@@ -14,6 +14,8 @@ export class CagesService {
 
   async create(userId: string, dto: CreateCageDto) {
     const data: CageTypes.CreateCageData = { ...dto, userId };
+    await this.findUserByIdOrThrow(userId);
+
     return await this.cagesRepository.create(data);
   }
 
