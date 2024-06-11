@@ -141,7 +141,7 @@ model CageState {
   id String @id @default(uuid())
   temperature Float
   humidity Float
-  createdAt DateTime @map("created_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   cage Cage @relation(fields: [cageId], references: [id])
   cageId String
