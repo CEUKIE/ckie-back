@@ -40,7 +40,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       message: exception.message,
     };
 
-    const message = `\nlevel: ${log.level}\nip: ${log.ip}\npath: ${log.path}\ntimestamp: ${log.timestamp}\ncontext: ${log.context}\nmessage: ${log.message}\n`;
+    const message = `\nlevel: ${log.level}\nip: ${log.ip}\npath: ${
+      log.path
+    }\nbody: ${JSON.stringify(req.body, null, 2)}\ntimestamp: ${
+      log.timestamp
+    }\ncontext: ${log.context}\nmessage: ${log.message}\n`;
 
     if (exception instanceof HttpException) {
       this.logger.warn(message);
