@@ -82,11 +82,11 @@ async function main() {
   });
 
   const cage1 = await prisma.cage.upsert({
-    where: { id: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f' },
+    where: { id: '55475ad3-c152-484e-b50d-5bf38fe8b496' },
     update: {},
     create: {
-      id: 'c3bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
-      name: '코따리 사육장',
+      id: '55475ad3-c152-484e-b50d-5bf38fe8b496',
+      name: '초코 사육장',
       userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
     },
   });
@@ -108,6 +108,54 @@ async function main() {
       id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
       name: '스네일 사육장',
       userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
+    },
+  });
+
+  const state1 = await prisma.cageState.upsert({
+    where: { id: 'cf7fbf85-2a72-4f7b-a2dd-9ff92531a751' },
+    update: {},
+    create: {
+      id: 'cf7fbf85-2a72-4f7b-a2dd-9ff92531a751',
+      temperature: 25,
+      humidity: 61.2,
+
+      cageId: '55475ad3-c152-484e-b50d-5bf38fe8b496',
+    },
+  });
+
+  const state2 = await prisma.cageState.upsert({
+    where: { id: 'df7fbf85-2a72-4f7b-a2dd-9ff92531a751' },
+    update: {},
+    create: {
+      id: 'df7fbf85-2a72-4f7b-a2dd-9ff92531a751',
+      temperature: 26,
+      humidity: 62.2,
+
+      cageId: '55475ad3-c152-484e-b50d-5bf38fe8b496',
+    },
+  });
+
+  const state3 = await prisma.cageState.upsert({
+    where: { id: 'cf7dbf85-2a72-4f7b-a2dd-9ff92531a751' },
+    update: {},
+    create: {
+      id: 'cf7dbf85-2a72-4f7b-a2dd-9ff92531a751',
+      temperature: 28,
+      humidity: 63.2,
+
+      cageId: '55475ad3-c152-484e-b50d-5bf38fe8b496',
+    },
+  });
+
+  const state4 = await prisma.cageState.upsert({
+    where: { id: 'cf7dbf85-2a72-4f7b-a2dd-9ff92531a752' },
+    update: {},
+    create: {
+      id: 'cf7dbf85-2a72-4f7b-a2dd-9ff92531a752',
+      temperature: 30,
+      humidity: 66.4,
+
+      cageId: '55475ad3-c152-484e-b50d-5bf38fe8b496',
     },
   });
 
@@ -180,6 +228,10 @@ async function main() {
     cage1,
     cage2,
     cage3,
+    state1,
+    state2,
+    state3,
+    state4,
     record1,
     record2,
     record3,
