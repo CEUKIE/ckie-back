@@ -39,9 +39,9 @@ export class CageStatesPrismaRepository implements CageStatesRepository {
       },
       where: {
         cageId,
-        createdAt: {
-          gte: new Date(),
-        },
+        // createdAt: {
+        //   gte: new Date(),
+        // },
       },
       orderBy: {
         createdAt: 'asc',

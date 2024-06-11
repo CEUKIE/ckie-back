@@ -17,7 +17,6 @@ import { ChangeTempDto } from './change-temp.dto';
 import { ChangeHumidityDto } from './change-humidity.dto';
 import { WsExceptionFilter } from '../common/filters/ws-exception.filter';
 import { WsInterceptor } from '../common/interceptors/ws.interceptor';
-import { cli } from 'winston/lib/winston/config';
 
 @UseInterceptors(WsInterceptor)
 @UseFilters(WsExceptionFilter)
