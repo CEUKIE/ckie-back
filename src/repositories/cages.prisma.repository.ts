@@ -25,11 +25,14 @@ export class CagesPrismaRepository implements CagesRepository {
     });
   }
 
-  async findAllByUserId(userId: string): Promise<CageTypes.Cage[]> {
+  async findAllByUserId(
+    userId: string,
+  ): Promise<(CageTypes.Cage & { avatarUrl: string })[]> {
     return await this.prisma.cage.findMany({
       select: {
         id: true,
         name: true,
+        avatarUrl: true,
       },
       where: { userId },
     });
