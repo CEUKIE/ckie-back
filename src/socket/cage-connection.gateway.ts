@@ -151,7 +151,7 @@ export class CageConnectionGateway
   ) {
     const { cageId, ...rest } = data;
     this.logger.info(
-      `\nevent: request-target-temp\nclientId: ${
+      `\nevent: response-target-temp\nclientId: ${
         client.id
       },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
@@ -181,7 +181,7 @@ export class CageConnectionGateway
   ) {
     const { cageId, ...rest } = data;
     this.logger.info(
-      `\nevent: request-target-humidity\nclientId: ${
+      `\nevent: response-target-humidity\nclientId: ${
         client.id
       },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
