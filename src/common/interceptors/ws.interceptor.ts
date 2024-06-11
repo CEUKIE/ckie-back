@@ -27,7 +27,7 @@ export class WsInterceptor implements NestInterceptor {
     const client = ctx.getClient();
     const data = ctx.getData();
 
-    const message = `\nWS\nip: ${client.handshake?.address}\ndata: ${data?.event}`;
+    const message = `\nWS\nip: ${client.handshake?.address}\n`;
     this.logger.warn(message);
 
     return next.handle();
