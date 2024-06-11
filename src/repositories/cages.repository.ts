@@ -2,7 +2,8 @@ import { CageTypes } from '../types';
 
 export interface CagesRepository {
   create(data: CageTypes.CreateCageData): Promise<CageTypes.Cage>;
-  findAll(): Promise<CageTypes.Cage[]>;
+  // TODO 타입 수정
+  findAll(): Promise<(CageTypes.Cage & { avatarUrl: string })[]>;
   findAllByUserId(userId: string): Promise<CageTypes.Cage[]>;
   findOneById(id: string): Promise<CageTypes.CageDetail | null>;
   update(

@@ -88,6 +88,7 @@ async function main() {
       id: '55475ad3-c152-484e-b50d-5bf38fe8b496',
       name: '초코 사육장',
       userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
+      avatarUrl: 'test',
     },
   });
 
@@ -98,6 +99,7 @@ async function main() {
       id: 'c6bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
       name: '달팽이 사육장',
       userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
+      avatarUrl: 'test',
     },
   });
 
@@ -108,6 +110,7 @@ async function main() {
       id: 'c5bfa6a7-ebdd-4a2b-aadb-1bc9644a6b5f',
       name: '스네일 사육장',
       userId: 'cd8ea312-01d2-4821-8d2d-6a9950abac34',
+      avatarUrl: 'test',
     },
   });
 
