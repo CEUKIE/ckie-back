@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CageStatesService } from '../providers/cage-states.service';
 import { CreateCageStatesDto } from '../dto/cage-states/create-cage-states.dto';
 import { ResponseForm } from '../common/format/response-form';
@@ -17,6 +17,12 @@ export class CageStatesController {
   @Post()
   async create(@Body() dto: CreateCageStatesDto) {
     const response = await this.cageStatesService.create(dto);
+    return ResponseForm.ok(response);
+  }
+
+  @Get(':id')
+  async getAllToday(@Param('id') cageId: string) {
+    const response = await this.cageStatesService.findAllTodayByCageId(cageId);
     return ResponseForm.ok(response);
   }
 }

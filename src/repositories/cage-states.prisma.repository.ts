@@ -21,4 +21,31 @@ export class CageStatesPrismaRepository implements CageStatesRepository {
         createdAt: v.createdAt,
       }));
   }
+
+  async findAllByCageIdToday(
+    cageId: string,
+  ): Promise<CageStateTypes.CageState[]> {
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const endOfToday = new Date();
+    endOfToday.setHours(23, 59, 59, 999);
+
+    return await this.prisma.cageState.findMany({
+      select: {
+        temperature: true,
+        humidity: true,
+        createdAt: true,
+      },
+      where: {
+        cageId,
+        createdAt: {
+          gte: new Date(),
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
+  }
 }
