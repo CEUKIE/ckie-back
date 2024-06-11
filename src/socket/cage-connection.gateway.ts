@@ -16,7 +16,6 @@ import { Logger } from 'winston';
 import { ChangeTempDto } from './change-temp.dto';
 import { ChangeHumidityDto } from './change-humidity.dto';
 import { WsExceptionFilter } from '../common/filters/ws-exception.filter';
-import { LoggingInterceptor } from '../common';
 import { WsInterceptor } from '../common/interceptors/ws.interceptor';
 
 @UseInterceptors(WsInterceptor)
@@ -40,13 +39,13 @@ export class CageConnectionGateway
 
   handleConnection(client: Socket) {
     this.logger.info(
-      `${client.id}(${client.handshake.query['username']}) is connected`,
+      `${client.id}(${client.handshake.query['username']}) is connected\n`,
     );
     client.emit('connection');
   }
 
   handleDisconnect(client: Socket) {
-    this.logger.info(`${client.id} is disconnected...`);
+    this.logger.info(`${client.id} is disconnected...\n`);
   }
 
   @SubscribeMessage('message')
@@ -75,7 +74,7 @@ export class CageConnectionGateway
     @ConnectedSocket() client: Socket,
     @MessageBody() data: { cageId: string },
   ) {
-    this.logger.info(`request temperature to ${data.cageId}`);
+    this.logger.info(`request temperature to ${data.cageId}\n`);
     client.to(data.cageId).emit('request-temp-humidity');
   }
 
@@ -88,7 +87,7 @@ export class CageConnectionGateway
     this.logger.info(
       `\nclientId: ${client.id},\nroomId: ${
         data.cageId
-      },\nbody: ${JSON.stringify(data, null, 2)}`,
+      },\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
 
     client.to(data.cageId).emit('response-temp-humidity', {
@@ -109,7 +108,7 @@ export class CageConnectionGateway
         data,
         null,
         2,
-      )}`,
+      )}\n`,
     );
     client.to(data.cageId).emit('change-temp', rest);
   }
@@ -126,7 +125,7 @@ export class CageConnectionGateway
         data,
         null,
         2,
-      )}`,
+      )}\n`,
     );
     client.to(data.cageId).emit('change-humidity', rest);
   }
@@ -139,7 +138,7 @@ export class CageConnectionGateway
     this.logger.info(
       `\nevent: request-target-temp\nclientId: ${client.id},\nroomId: ${
         data.cageId
-      },\nbody: ${JSON.stringify(data, null, 2)}`,
+      },\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
 
     client.to(data.cageId).emit('request-target-temp');
@@ -154,9 +153,39 @@ export class CageConnectionGateway
     this.logger.info(
       `\nevent: request-target-temp\nclientId: ${
         client.id
-      },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}`,
+      },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
 
     client.to(data.cageId).emit('response-target-temp', rest);
+  }
+
+  @SubscribeMessage('request-target-humidity')
+  handleRequestTargetHumidity(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: { cageId: string },
+  ) {
+    this.logger.info(
+      `\nevent: request-target-humidity\nclientId: ${client.id},\nroomId: ${
+        data.cageId
+      },\nbody: ${JSON.stringify(data, null, 2)}\n`,
+    );
+
+    client.to(data.cageId).emit('request-target-humidity');
+  }
+
+  @SubscribeMessage('response-target-humidity')
+  handleResponseTargetHumidity(
+    @ConnectedSocket() client: Socket,
+    @MessageBody()
+    data: { cageId: string; minHumidity: number; maxHumidity: number },
+  ) {
+    const { cageId, ...rest } = data;
+    this.logger.info(
+      `\nevent: request-target-humidity\nclientId: ${
+        client.id
+      },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}\n`,
+    );
+
+    client.to(data.cageId).emit('response-target-humidity', rest);
   }
 }
