@@ -125,7 +125,7 @@ model Record {
 model Cage {
   id String @id
   name String @db.VarChar(15)
-  avatarUrl String? @map("avatar_url")
+  avatarUrl String @map("avatar_url")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -141,7 +141,7 @@ model CageState {
   id String @id @default(uuid())
   temperature Float
   humidity Float
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @map("created_at")
 
   cage Cage @relation(fields: [cageId], references: [id])
   cageId String
