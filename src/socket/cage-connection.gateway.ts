@@ -203,7 +203,7 @@ export class CageConnectionGateway
   @SubscribeMessage('response-photo')
   handleResponsePhoto(
     @ConnectedSocket() client: Socket,
-    @MessageBody() data: { cageId: string },
+    @MessageBody() data: { cageId: string; url: string },
   ) {
     this.logger.info(
       `\nevent: response-photo\nclientId: ${client.id},\nroomId: ${
@@ -211,6 +211,6 @@ export class CageConnectionGateway
       },\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
 
-    client.to(data.cageId).emit('request-photo');
+    client.to(data.cageId).emit('response-photo', { url: data.url });
   }
 }
