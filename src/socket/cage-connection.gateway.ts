@@ -17,6 +17,7 @@ import { ChangeTempDto } from './change-temp.dto';
 import { ChangeHumidityDto } from './change-humidity.dto';
 import { WsExceptionFilter } from '../common/filters/ws-exception.filter';
 import { WsInterceptor } from '../common/interceptors/ws.interceptor';
+import { cli } from 'winston/lib/winston/config';
 
 @UseInterceptors(WsInterceptor)
 @UseFilters(WsExceptionFilter)
@@ -104,11 +105,9 @@ export class CageConnectionGateway
     const { cageId, ...rest } = data;
 
     this.logger.info(
-      `\nclientId: ${client.id},\nroomId: ${cageId},\nbody: ${JSON.stringify(
-        data,
-        null,
-        2,
-      )}\n`,
+      `\nevent: change-temp\nclientId: ${
+        client.id
+      },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
     client.to(data.cageId).emit('change-temp', rest);
   }
@@ -121,11 +120,9 @@ export class CageConnectionGateway
     const { cageId, ...rest } = data;
 
     this.logger.info(
-      `\nclientId: ${client.id},\nroomId: ${cageId},\nbody: ${JSON.stringify(
-        data,
-        null,
-        2,
-      )}\n`,
+      `\nevent: change-humidity\nclientId: ${
+        client.id
+      },\nroomId: ${cageId},\nbody: ${JSON.stringify(data, null, 2)}\n`,
     );
     client.to(data.cageId).emit('change-humidity', rest);
   }
@@ -187,5 +184,33 @@ export class CageConnectionGateway
     );
 
     client.to(data.cageId).emit('response-target-humidity', rest);
+  }
+
+  @SubscribeMessage('request-photo')
+  handleRequestPhoto(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: { cageId: string },
+  ) {
+    this.logger.info(
+      `\nevent: request-photo\nclientId: ${client.id},\nroomId: ${
+        data.cageId
+      },\nbody: ${JSON.stringify(data, null, 2)}\n`,
+    );
+
+    client.to(data.cageId).emit('request-photo');
+  }
+
+  @SubscribeMessage('response-photo')
+  handleResponsePhoto(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() data: { cageId: string },
+  ) {
+    this.logger.info(
+      `\nevent: response-photo\nclientId: ${client.id},\nroomId: ${
+        data.cageId
+      },\nbody: ${JSON.stringify(data, null, 2)}\n`,
+    );
+
+    client.to(data.cageId).emit('request-photo');
   }
 }
